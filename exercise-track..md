@@ -21,6 +21,7 @@
 
 ### Exercise 1.0 – Project setup & “Hello Ticketeer”
 **Story hook:** Ticketeer’s new backend team (that’s them) just joined. Step one: get the service to start and respond.
+
 **Tasks**
 1. Clone/open the Ticketeer project.
 2. Ensure the app starts with mvn spring-boot:run or via IDE.
@@ -32,7 +33,7 @@
    
 > what is `ticketeer.environment` used for?
 
-⠀**Testing focus**
+**Testing focus**
 * Add a **Spring MVC test** (@WebMvcTest or @SpringBootTest with MockMvc) that:
   * Calls /api/ping
   * Asserts 200 OK and JSON body contains "ticketeer-ok".
@@ -40,6 +41,7 @@
 ⠀
 ### Exercise 1.1 – Domain sketch: Events and Seat Inventory (in-memory for now)
 **Story hook:** Ticketeer needs to list upcoming events for early organizers. Persistence can wait – we’ll keep it in memory to start.
+
 **Tasks**
 1. Define simple DTOs:
    * EventDto (id, name, venue, startDateTime, basePrice).
@@ -50,7 +52,7 @@
    * GET /api/events/{id} – details for a single event.
 4. Preload 3–5 hard-coded events at startup (e.g. via a DataInitializer bean).
 
-⠀**Testing focus**
+**Testing focus**
 * •	Write tests for:
   * ◦	GET /api/events returns the seeded events.
   * ◦	GET /api/events/{id}:
@@ -60,6 +62,7 @@
 ⠀
 ### Exercise 1.2 – Basic configuration & profiles
 **Story hook:** Ticketeer runs in different environments (local workshop vs. production later). We start with profiles.
+
 **Tasks**
 1. Introduce profiles:
    * application-local.yml
@@ -73,7 +76,7 @@
    * Fields like startupBannerEnabled, defaultCurrency, etc.
 4. Use these properties in your controller or service (e.g. include defaultCurrency in event responses).
 
-⠀**Testing focus**
+**Testing focus**
 * Add a **configuration test**:
   * Load context with @SpringBootTest(properties = "ticketeer.default-currency=EUR")
  
@@ -93,6 +96,7 @@
 
 ### Exercise 2.0 – PostgreSQL integration & JPA entities
 **Story hook:** The founders want real persistence: events must survive restarts.
+
 **Tasks**
 1. Configure **PostgreSQL** datasource via application-local.yml:
    * spring.datasource.url, username, password.
@@ -106,7 +110,7 @@
 > Here might be a goot point to also introduce the service layer
    > * introduce 3-tier architecture (controller -> service -> repository)
 
-⠀**Testing focus**
+**Testing focus**
 * Write a **JPA repository test**:
   * Use @DataJpaTest.
   * Persist a sample EventEntity.
@@ -116,6 +120,7 @@
 ⠀
 ### Exercise 2.1 – Database schema evolution (Flyway or Liquibase)
 **Story hook:** Ticketeer is evolving constantly. Schema changes must be manageable and trackable.
+
 **Tasks**
 1. Add Flyway (or Liquibase) to the project.
 2. Create an initial migration:
@@ -124,7 +129,7 @@
 4. Add a second migration to:
    * Add a status column to events (e.g. DRAFT, PUBLISHED, CANCELLED).
 
-⠀**Testing focus**
+**Testing focus**
 * Start app and verify migrations apply (can be manual / log-based).
 * Add a test that:
   * Uses the real schema and ensures status is stored and retrieved correctly.
@@ -132,6 +137,7 @@
 ⠀
 ### Exercise 2.2 – First transactional use case: publishing an event
 **Story hook:** Organizers want to switch an event from DRAFT to PUBLISHED. This may include derived changes later.
+
 **Tasks**
 1. Add a service method in application layer:
    * publishEvent(eventId):
@@ -141,7 +147,7 @@
    * POST /api/events/{id}/publish → returns updated event.
 3. Mark the service method @Transactional.
 
-⠀**Testing focus**
+**Testing focus**
 * •	Write **service-level tests**:
   * Happy path: DRAFT → PUBLISHED.
   * Failure path: calling publish on already PUBLISHED event throws domain exception.
@@ -160,6 +166,7 @@
 
 ### Exercise 3.0 – Reservation & Order domain modelling
 **Story hook:** Ticketeer is going live – users must actually reserve seats and buy tickets.
+
 **Tasks**
 1. Define new entities:
    * Reservation:
@@ -172,7 +179,7 @@
    * confirmReservation(reservationId) (to be used by order in next exercise).
 4. Update events table/entity to track remainingSeats.
 
-⠀**Testing focus**
+**Testing focus**
 * **Domain tests** to ensure:
   * Creating a reservation reduces remainingSeats.
   * Cannot create reservation if remaining seats are insufficient.
@@ -180,6 +187,7 @@
 ⠀
 ### Exercise 3.1 – REST API for purchase flow
 **Story hook:** The frontend needs a clear API to guide customers from “I want 2 tickets” to “order confirmed”.
+
 **Tasks**
 1. Implement REST endpoints:
    * POST /api/event/{id}/reservation with JSON { "tickets": 2 }
@@ -190,7 +198,7 @@
    * ◦	201 Created when reservation/order created.
    * ◦	Reasonable errors for invalid event or reservation.
 
-⠀**Testing focus**
+**Testing focus**
 * **Integration tests** (@SpringBootTest + Testcontainers or in-memory DB):
   * Full flow: create event → create reservation → create order.
   * Validation: cannot create order on EXPIRED or non-existent reservations.
@@ -198,6 +206,7 @@
 ⠀
 ### Exercise 3.2 – Integrating an external ticket vendor (OpenAPI + Spring HTTP client)
 **Story hook:** For a high-profile festival, Ticketeer must sell a portion of tickets from a partner’s system (exposed via an external REST API). Ticketeer will reserve in its own DB but also call out to the partner.
+
 **Tasks**
 1. 1	Given an **OpenAPI spec** (ticketvendor-api.yaml):
    * Use OpenAPI Generator (or similar) to create a client module or package.
@@ -213,7 +222,7 @@
    * If event is “externalVendorManaged=true`, also call the vendor API to reserve seats.
    * If the vendor call fails, roll back your local transaction.
 
-⠀**Testing focus**
+**Testing focus**
 * Use **mock HTTP server** (WireMock / MockWebServer) to:
 
 > Rather use something like `@RestClientTest (SpringBoot means, instead of external tools).
@@ -232,6 +241,7 @@
 
 ### Exercise 4.0 – Externalizing configuration & profiles for vendors
 **Story hook:** The vendor provides different base URLs and API keys for test vs. production environments.
+
 **Tasks**
 1. Create a configuration properties class:
    * VendorApiProperties with prefix ticketeer.vendor.
@@ -242,7 +252,7 @@
 3. Inject these properties into VendorTicketClient wrapper.
 4. Make external calls conditional on enabled.
 
-⠀**Testing focus**
+**Testing focus**
 * Config tests that:
   * Load context with different properties.
   * Validate that VendorApiProperties get correct values.
@@ -256,6 +266,7 @@
 ⠀
 ### Exercise 4.1 – Spring Security: securing organizer endpoints
 **Story hook:** Ticketeer needs to distinguish between **public customer APIs** and **organizer admin APIs**.
+
 **Tasks**
 1. Introduce Spring Security.
 2. Define two categories of endpoints:
@@ -268,7 +279,7 @@
    * Organizer endpoints require authentication (e.g. HTTP Basic or form login with in-memory users).
      * Example: user organizer / password organizer123 with role ORGANIZER.
 
-⠀**Testing focus**
+**Testing focus**
 * Use **Spring Security test support**:
   * Anonymous user can call GET /api/events.
   * Anonymous user **cannot** call POST /api/events.
@@ -277,6 +288,7 @@
 ⠀
 ### Exercise 4.2 – Method-level security & domain rules
 **Story hook:** Only the organizer that owns an event should be allowed to modify it (simulated).
+
 **Tasks**
 1. Add an organizerId to Event.
 2. Add method-level security:
@@ -284,7 +296,7 @@
    * Or simpler variant: only allow an organizer with name "acme-organizer" to modify their events.
 3. Wire this into service methods like publishEvent(...).
 
-⠀**Testing focus**
+**Testing focus**
 * Method security tests:
   * Use @WithMockUser(username="acme-organizer", roles="ORGANIZER") to verify allowed access.
   * @WithMockUser(username="other-organizer", roles="ORGANIZER") should get AccessDeniedException.
@@ -298,6 +310,7 @@
 
 ### Exercise 5.0 – Actuator basics
 **Story hook:** Ticketeer is going to be deployed to a staging/production environment; ops need health endpoints and metrics.
+
 **Tasks**
 1. Add Spring Boot Actuator dependency.
 2. Enable basic actuator endpoints in application-local.yml:
@@ -313,7 +326,7 @@
    * /actuator/info
    * /actuator/metrics
 
-⠀**Testing focus**
+**Testing focus**
 * Integration test that:
   * Calls /actuator/health and expects UP.
   * Asserts basic info fields.
@@ -321,6 +334,7 @@
 ⠀
 ### Exercise 5.1 – Custom health indicator: database & vendor integration
 **Story hook:** Operations want a single place to check whether the DB and external vendor are reachable before big ticket drops.
+
 **Tasks**
 1. Implement a custom HealthIndicator:
    * TicketeerHealthIndicator that:
@@ -330,7 +344,7 @@
    * Number of active/published events.
    * Whether vendor is “up” or “down”.
 
-⠀**Testing focus**
+**Testing focus**
 * Test the health indicator:
   * Mock repositories / vendor client to produce up/down states.
   * Assert JSON structure under /actuator/health for both scenarios.
@@ -338,6 +352,7 @@
 ⠀
 ### Exercise 5.2 – Simple metrics: reservations and sales
 **Story hook:** The founders want to monitor how many reservations and orders are created per event.
+
 **Tasks**
 1. Introduce Micrometer counters or timers:
    * Counter: ticketeer.reservations.created.
@@ -345,7 +360,7 @@
 2. Increment counters in the respective service methods.
 3. Explore /actuator/metrics/ticketeer.reservations.created and /actuator/metrics/ticketeer.orders.completed.
 
-⠀**Testing focus**
+**Testing focus**
 * Unit test or slice test:
   * Use MeterRegistry in tests.
   * After calling reservation/order service methods, assert counter values.
