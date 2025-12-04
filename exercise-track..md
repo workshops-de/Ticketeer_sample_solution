@@ -216,7 +216,8 @@
 ⠀**Testing focus**
 * Use **mock HTTP server** (WireMock / MockWebServer) to:
 
-> Rather use something like `@RestClientTest (SpringBoot means, instead of external tools)
+> Rather use something like `@RestClientTest (SpringBoot means, instead of external tools).
+> Though, I tried it out yesterday and it does not feel right in combination with the new @ImportHttpServices. But I'm sure we find a solution to that. My point being, we should show more SpringBoot features, rather than using external tools.
 
   * Simulate successful vendor reservation.
   * Simulate failure and assert that your local reservation is not persisted.
@@ -248,6 +249,10 @@
 * Unit test for VendorTicketClient that:
   * Uses the configured base URL and API key header.
 
+> There are different methods to define a HTTP client to call external APIs.
+> If we use the declarative way (which is a new way in SpringBoot4) then the proposed exercise here might be difficult to achive.
+> I we use the programaatically way, to define the client, than it could be done.
+
 ⠀
 ### Exercise 4.1 – Spring Security: securing organizer endpoints
 **Story hook:** Ticketeer needs to distinguish between **public customer APIs** and **organizer admin APIs**.
@@ -255,9 +260,9 @@
 1. Introduce Spring Security.
 2. Define two categories of endpoints:
    * **Public**:
-     * GET /api/events, GET /api/events/{id}, reservation & order endpoints.
+     * GET /api/event, GET /api/event/{id}, reservation & order endpoints.
    * **Organizer/Admin**:
-     * POST /api/events, POST /api/events/{id}/publish, editing events, reading sales reports.
+     * POST /api/event, POST /api/event/{id}/publish, editing events, reading sales reports.
 3. Configure security:
    * Public endpoints available without authentication.
    * Organizer endpoints require authentication (e.g. HTTP Basic or form login with in-memory users).
@@ -297,6 +302,10 @@
 1. Add Spring Boot Actuator dependency.
 2. Enable basic actuator endpoints in application-local.yml:
    * management.endpoints.web.exposure.include=health,info,metrics.
+  
+> One thought here: for me `application.yaml` is kind of the default property file, which should always define properties for local use.
+> After that all changes for other profiles are defined in the respective property files. So there is no need for a `application-local.yaml`.
+
 3. Configure info with:
    * App name, version, environment from ticketeer properties.
 4. Validate:
