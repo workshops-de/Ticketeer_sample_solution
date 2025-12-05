@@ -71,21 +71,17 @@
 
 **Testing focus**
 * Add a **configuration test**:
-  * Load context with @SpringBootTest(properties = "ticketeer.default-currency=EUR")
- 
-> Maybe rather use `@ActiveProfiles` her for the test and then check, that the correct values are in `TicketeerProperties`
-
+  * Use `@ActiveProfiles` and verify `TicketeerProperties` contains the correct values.
   * Assert that TicketeerProperties is bound correctly.
 
-> ? at which point do we introduce 3-tier architecture? Right here or on day 2, when we introduce repositories?
 
-⠀
 ## Day 2 – Persistence, PostgreSQL & Transaction Basics
 **Goals**
 * Replace in-memory storage with PostgreSQL.
 * Introduce Spring Data JPA and migration tooling.
 * Start modelling part of the ticketing workflow in the DB.
 * Keep tests front and center.
+* Introduce a 3-tier architecture (controller → service → repository).
 
 ### Exercise 2.0 – PostgreSQL integration & JPA entities
 **Story hook:** The founders want real persistence: events must survive restarts.
@@ -100,8 +96,6 @@
    * EventRepository extends JpaRepository<EventEntity, Long>.
 4. Replace in-memory repository logic in REST endpoints with database-backed repositories.
 
-> Here might be a goot point to also introduce the service layer
-   > * introduce 3-tier architecture (controller -> service -> repository)
 
 **Testing focus**
 * Write a **JPA repository test**:
@@ -147,8 +141,6 @@
 * •	Add a **controller test** ensuring status code:
   * 200 for success.
   * 400 or 409 for invalid transition.
- 
-> I'm not so sure about this `@Transactional` yet. My argument would be, that `@Transactional` should show that, if multiple changes are requested on the DB side, either all or none are successful if wrapped in a transaction. How can we show that here? 
 
 ⠀
 ## Day 3 – Ticket Reservations, Purchase Flow & External API Integration (Part 1)
@@ -238,12 +230,6 @@
 * Config tests that:
   * Load context with different properties.
   * Validate that VendorApiProperties get correct values.
-* Unit test for VendorTicketClient that:
-  * Uses the configured base URL and API key header.
-
-> There are different methods to define a HTTP client to call external APIs.
-> If we use the declarative way (which is a new way in SpringBoot4) then the proposed exercise here might be difficult to achive.
-> I we use the programaatically way, to define the client, than it could be done.
 
 ⠀
 ### Exercise 4.1 – Spring Security: securing organizer endpoints
