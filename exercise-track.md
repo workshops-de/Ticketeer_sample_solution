@@ -12,10 +12,7 @@
 ## Day 1 – Spring Boot & REST Fundamentals
 **Goals**
 * Get everyone running Ticketeer locally.
-* Introduce the core domain (Event, SeatInventory).
-
-> I would rather call it `TicketInventory`
-
+* Introduce the core domain (Event, TicketInventory).
 * Expose first REST APIs.
 * Write tests from the beginning.
 
@@ -29,16 +26,15 @@
    * GET /api/ping → returns { "status": "ticketeer-ok" }
 4. Use application.properties (or .yml) to set:
    * server.port=8080
-   * A ticketeer.environment=local-dev property.
-   
-> what is `ticketeer.environment` used for?
+   * An application.title property.
+
 
 **Testing focus**
 * Add a **Spring MVC test** (@WebMvcTest or @SpringBootTest with MockMvc) that:
   * Calls /api/ping
   * Asserts 200 OK and JSON body contains "ticketeer-ok".
 
-⠀
+
 ### Exercise 1.1 – Domain sketch: Events and Seat Inventory (in-memory for now)
 **Story hook:** Ticketeer needs to list upcoming events for early organizers. Persistence can wait – we’ll keep it in memory to start.
 
@@ -68,9 +64,6 @@
    * application-local.yml
    * application-test.yml
 2. Move seeding config / properties into local profile.
-
-> Did you mean seeding config like `server.port` here?
-
 3. Add a configuration properties class:
    * TicketeerProperties with prefix ticketeer.
    * Fields like startupBannerEnabled, defaultCurrency, etc.
@@ -98,11 +91,11 @@
 **Story hook:** The founders want real persistence: events must survive restarts.
 
 **Tasks**
-1. Configure **PostgreSQL** datasource via application-local.yml:
-   * spring.datasource.url, username, password.
+1. Configure **PostgreSQL** datasource via application.yml:
+   * spring.datasource.url, username, password (using environment variables or, alternatively, via a production profile).
 2. Define JPA entities:
    * EventEntity (id, name, venue, startDateTime, basePrice, capacity).
-   * SeatInventoryEntity or simply a numeric field on Event for now.
+   * TicketInventoryEntity or simply a numeric field on Event for now.
 3. Introduce Spring Data repositories:
    * EventRepository extends JpaRepository<EventEntity, Long>.
 4. Replace in-memory repository logic in REST endpoints with database-backed repositories.
@@ -194,7 +187,7 @@
      * Returns ReservationDto (with fields like reservationId, eventId, numberReservedTickets, reservedUntil).
    * ◦	POST /api/reservation/{id}/order with payment info (simplified).
      * ▪	Creates an order and marks reservation as CONFIRMED + order PAID (for now, simulate payment).
-2. 2	Ensure proper HTTP semantics:
+2. Ensure proper HTTP semantics:
    * ◦	201 Created when reservation/order created.
    * ◦	Reasonable errors for invalid event or reservation.
 
@@ -204,30 +197,19 @@
   * Validation: cannot create order on EXPIRED or non-existent reservations.
 
 ⠀
-### Exercise 3.2 – Integrating an external ticket vendor (OpenAPI + Spring HTTP client)
+### Exercise 3.2 – Integrating an external ticket vendor (OpenAPI + `@HttpExchange`)
 **Story hook:** For a high-profile festival, Ticketeer must sell a portion of tickets from a partner’s system (exposed via an external REST API). Ticketeer will reserve in its own DB but also call out to the partner.
 
 **Tasks**
-1. 1	Given an **OpenAPI spec** (ticketvendor-api.yaml):
-   * Use OpenAPI Generator (or similar) to create a client module or package.
-
-> Here I would rather make use of `@HttpExchange`. One could either write a Service interface himself/herself, or use the one also provided by the Ticketvendor
-
-2. Add a Spring bean wrapping the generated client:
-   * VendorTicketClient using Spring’s HTTP client support (RestClient / WebClient backed by JDK HttpClient).
-
-> This would then change to: Write a Configuration to let SpringBoot generate a RestClient for you. We could than show, how this configuration was simplified very much compared to SpringBoot 3
-   
-3. 3	Extend createReservation(...):
-   * If event is “externalVendorManaged=true`, also call the vendor API to reserve seats.
+1. Given an **OpenAPI spec** (ticket-vendor-api.yaml):
+   * Use OpenAPI Generator to create a client module and an `@HttpExchange` interface.
+2. Write a configuration to have SpringBoot generate a RestClient for you.
+3. Extend createReservation(...):
+   * If event is `externalVendorManaged=true`, also call the vendor API to reserve seats.
    * If the vendor call fails, roll back your local transaction.
 
 **Testing focus**
-* Use **mock HTTP server** (WireMock / MockWebServer) to:
-
-> Rather use something like `@RestClientTest (SpringBoot means, instead of external tools).
-> Though, I tried it out yesterday and it does not feel right in combination with the new @ImportHttpServices. But I'm sure we find a solution to that. My point being, we should show more SpringBoot features, rather than using external tools.
-
+* Use `@RestClientTest` to:
   * Simulate successful vendor reservation.
   * Simulate failure and assert that your local reservation is not persisted.
 * Verify that your integration code is well-isolated and testable.
@@ -247,7 +229,7 @@
    * VendorApiProperties with prefix ticketeer.vendor.
    * Fields: baseUrl, apiKey, enabled.
 2. Bind these in:
-   * application-local.yml (pointing to mock/test URL).
+   * application-test.yml (pointing to mock / test URL).
    * application-prod.yml (pretend value / placeholder).
 3. Inject these properties into VendorTicketClient wrapper.
 4. Make external calls conditional on enabled.
@@ -313,12 +295,8 @@
 
 **Tasks**
 1. Add Spring Boot Actuator dependency.
-2. Enable basic actuator endpoints in application-local.yml:
+2. Enable basic actuator endpoints in application.yml:
    * management.endpoints.web.exposure.include=health,info,metrics.
-  
-> One thought here: for me `application.yaml` is kind of the default property file, which should always define properties for local use.
-> After that all changes for other profiles are defined in the respective property files. So there is no need for a `application-local.yaml`.
-
 3. Configure info with:
    * App name, version, environment from ticketeer properties.
 4. Validate:

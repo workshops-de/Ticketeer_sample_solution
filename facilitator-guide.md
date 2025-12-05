@@ -120,7 +120,7 @@ Each day includes **~3h20 of net coding time** (subtracting two 20-minute breaks
 * Complex domain modelling (reservations, orders).
 * Multi-step workflow + transactional boundaries.
 * OpenAPI-based code generation.
-* Integrating Spring’s HTTP client with external systems.
+* Integrating Spring’s `@HttpExchange` with external systems.
 * Test doubles & contract-ish testing (WireMock).
 
 ⠀
@@ -141,7 +141,7 @@ Each day includes **~3h20 of net coding time** (subtracting two 20-minute breaks
 #### Exercise 3.0
 * Explain why reservations expire, why capacity tracking is crucial.
 * Common pitfall:
-  * Forgetting to decrease available seats inside a transaction.
+  * Forgetting to decrease available tickets inside a transaction.
 
 #### Exercise 3.1
 * Stress proper HTTP semantics:
@@ -159,7 +159,7 @@ Each day includes **~3h20 of net coding time** (subtracting two 20-minute breaks
 > Maybe not use WireMock here, but more Spring Framework native means. 
 
 ### Checkpoints
-* Reservations persist and reduce remaining seats.
+* Reservations persist and reduce remaining tickets.
 * Orders link to reservations correctly.
 * External vendor is called only when needed.
 * Vendor failures roll back reservations (test this explicitly).
