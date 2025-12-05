@@ -6,7 +6,7 @@ Database-schema-evolution-(Flyway-or-Liquibase)
 First-transactional-use-case-publishing-an-event
 Reservation-&-Order-domain-modelling
 REST-API-for-purchase-flow
-Integrating-an-external-ticket-vendor-(OpenAPI-+-Spring-HTTP-client)
+Integrating-an-external-ticket-vendor-(OpenAPI-+-`@HttpExchange`)
 Externalizing-configuration-&-profiles-for-vendors
 Spring-Security-securing-organizer-endpoints
 Method-level-security-&-domain-rules
