@@ -18,7 +18,6 @@ class TicketeerStartControllerTest {
     @Autowired
     MockMvc mockMvc;
 
-
     @Test
     void testPingOk() throws Exception {
         mockMvc
