@@ -25,8 +25,7 @@
 3. Add a simple health-like endpoint:
    * GET /api/ping → returns { "status": "ticketeer-ok" }
 4. Use application.properties (or .yml) to set:
-   * server.port=8080
-   * An application.title property.
+   * an `application.title` property.
 
 
 **Testing focus**
