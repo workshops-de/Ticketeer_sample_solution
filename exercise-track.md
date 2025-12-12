@@ -25,17 +25,16 @@
 3. Add a simple health-like endpoint:
    * GET /api/ping → returns { "status": "ticketeer-ok" }
 4. Use application.properties (or .yml) to set:
-   * server.port=8080
-   * An application.title property.
+   * An `spring.application.name` property.
 
 
 **Testing focus**
-* Add a **Spring MVC test** (@WebMvcTest or @SpringBootTest with MockMvc) that:
+* Add a **Spring MVC test** (`@SpringBootTest` with MockMvc) that:
   * Calls /api/ping
   * Asserts 200 OK and JSON body contains "ticketeer-ok".
 
 
-### Exercise 1.1 – Domain sketch: Events and Seat Inventory (in-memory for now)
+### Exercise 1.1 – Domain sketch: Events and Ticket Inventory (in-memory for now)
 **Story hook:** Ticketeer needs to list upcoming events for early organizers. Persistence can wait – we’ll keep it in memory to start.
 
 **Tasks**
@@ -150,24 +149,24 @@
 * Start integrating with an external vendor API using an OpenAPI client.
 
 ### Exercise 3.0 – Reservation & Order domain modelling
-**Story hook:** Ticketeer is going live – users must actually reserve seats and buy tickets.
+**Story hook:** Ticketeer is going live – users must actually buy tickets.
 
 **Tasks**
 1. Define new entities:
    * Reservation:
-     * id, eventId, reservedAt, expiresAt, numberOfSeats, status (PENDING, EXPIRED, CONFIRMED).
+     * id, eventId, reservedAt, expiresAt, numberOfTickets, status (PENDING, EXPIRED, CONFIRMED).
    * Order:
      * id, reservationId, totalPrice, createdAt, status (PENDING_PAYMENT, PAID, FAILED).
 2. Add repositories for both.
 3. Implement service methods:
-   * createReservation(eventId, numberOfSeats).
+   * createReservation(eventId, numberOfTickets).
    * confirmReservation(reservationId) (to be used by order in next exercise).
-4. Update events table/entity to track remainingSeats.
+4. Update events table/entity to track remainingTickets.
 
 **Testing focus**
 * **Domain tests** to ensure:
-  * Creating a reservation reduces remainingSeats.
-  * Cannot create reservation if remaining seats are insufficient.
+  * Creating a reservation reduces remainingTickets.
+  * Cannot create reservation if remaining tickets are insufficient.
 
 ⠀
 ### Exercise 3.1 – REST API for purchase flow
@@ -197,7 +196,7 @@
    * Use OpenAPI Generator to create a client module and an `@HttpExchange` interface.
 2. Write a configuration to have SpringBoot generate a RestClient for you.
 3. Extend createReservation(...):
-   * If event is `externalVendorManaged=true`, also call the vendor API to reserve seats.
+   * If event is `externalVendorManaged=true`, also call the vendor API to reserve tickets.
    * If the vendor call fails, roll back your local transaction.
 
 **Testing focus**
