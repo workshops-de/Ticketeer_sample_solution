@@ -24,7 +24,7 @@
 2. Ensure the app starts with mvn spring-boot:run or via IDE.
 3. Add a simple health-like endpoint:
    * GET /api/ping → returns { "status": "ticketeer-ok" }
-4. Use `application.properties` (or .yml) to set:
+4. Use application.properties (or .yml) to set:
    * an `application.title` property.
 
 
