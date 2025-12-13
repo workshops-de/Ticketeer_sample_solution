@@ -11,7 +11,6 @@ public class TicketeerStartController {
     @GetMapping
     public String ping() {
         return """
-            {"status": "ticketeer-ok"}
-            """;
+            {"status": "ticketeer-ok"}""";
     }
 }
