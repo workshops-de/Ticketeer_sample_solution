@@ -6,12 +6,11 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("/api/ping")
-public class TicketeerStartController {
+public class StartController {
 
     @GetMapping
     public String ping() {
         return """
-            {"status": "ticketeer-ok"}
-            """;
+            {"status": "ticketeer-ok"}""";
     }
 }
