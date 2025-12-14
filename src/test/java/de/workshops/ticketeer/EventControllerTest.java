@@ -32,7 +32,7 @@ public class EventControllerTest {
   ObjectMapper objectMapper;
 
   @Test
-  void testGetEvents() throws Exception {
+  void getEvents() throws Exception {
     var eventsResult = mockMvc
         .perform(get("/api/events"))
         .andDo(print())
@@ -49,7 +49,7 @@ public class EventControllerTest {
   }
 
   @Test
-  void testGetEvent() throws Exception {
+  void getEvent() throws Exception {
     var eventResult = mockMvc
         .perform(get("/api/events/2"))
         .andDo(print())
