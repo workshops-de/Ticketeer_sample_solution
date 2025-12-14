@@ -4,7 +4,7 @@ import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
 public record EventDto(
-    long id,
+    Long id,
     String name,
     String venue,
     LocalDateTime startDateTime,

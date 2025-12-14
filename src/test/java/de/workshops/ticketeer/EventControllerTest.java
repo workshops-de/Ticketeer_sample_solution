@@ -14,12 +14,14 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.webmvc.test.autoconfigure.AutoConfigureMockMvc;
 import org.springframework.boot.webmvc.test.autoconfigure.WebMvcTest;
+import org.springframework.context.annotation.Import;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 import tools.jackson.core.type.TypeReference;
 import tools.jackson.databind.ObjectMapper;
 
 @WebMvcTest(EventController.class)
+@Import(EventRepository.class)
 @AutoConfigureMockMvc
 public class EventControllerTest {
 
@@ -30,7 +32,7 @@ public class EventControllerTest {
   ObjectMapper objectMapper;
 
   @Test
-  void getEvents() throws Exception {
+  void testGetEvents() throws Exception {
     var eventsResult = mockMvc
         .perform(get("/api/events"))
         .andDo(print())
@@ -44,5 +46,20 @@ public class EventControllerTest {
     List<EventDto> events = objectMapper.readValue(jsonPayload, new TypeReference<>(){});
     assertEquals(3, events.size());
     assertEquals("Rock Concert", events.getFirst().name());
+  }
+
+  @Test
+  void testGetEvent() throws Exception {
+    var eventResult = mockMvc
+        .perform(get("/api/events/2"))
+        .andDo(print())
+        .andExpect(status().isOk())
+        .andExpect(jsonPath("$.name", is("Jazz Festival")))
+        .andReturn();
+
+    String jsonPayload = eventResult.getResponse().getContentAsString();
+
+    EventDto event = objectMapper.readValue(jsonPayload, EventDto.class);
+    assertEquals("Jazz Festival", event.name());
   }
 }

@@ -1,8 +1,10 @@
 package de.workshops.ticketeer;
 
 import java.util.List;
+import java.util.Objects;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -19,10 +21,10 @@ public class EventController {
     }
 
     @GetMapping("/{id}")
-    public EventDto getEvent(long id) {
+    public EventDto getEvent(@PathVariable Long id) {
         return eventRepository.getEvents()
             .stream()
-            .filter(event -> event.id() == id)
+            .filter(event -> Objects.equals(event.id(), id))
             .findFirst()
             .orElseThrow(() -> new RuntimeException("Event not found"));
     }
