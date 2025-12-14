@@ -4,6 +4,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.webmvc.test.autoconfigure.AutoConfigureMockMvc;
+import org.springframework.boot.webmvc.test.autoconfigure.WebMvcTest;
 import org.springframework.test.web.servlet.MockMvc;
 
 import static org.hamcrest.Matchers.is;
@@ -11,7 +12,7 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
-@SpringBootTest
+@WebMvcTest(TicketeerStartController.class)
 @AutoConfigureMockMvc
 class TicketeerStartControllerTest {
 
@@ -19,7 +20,7 @@ class TicketeerStartControllerTest {
     MockMvc mockMvc;
 
     @Test
-    void testPingOk() throws Exception {
+    void ping() throws Exception {
         mockMvc
                 .perform(get("/api/ping"))
                 .andDo(print())

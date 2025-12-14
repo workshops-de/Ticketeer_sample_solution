@@ -41,16 +41,16 @@
 1. Define simple DTOs:
    * EventDto (id, name, venue, startDateTime, basePrice).
 2. Add an in-memory repository:
-   * A List<Event> or Map<Long, Event> stored in a @Component.
+   * A List<EventDto> or Map<Long, EventDto> stored in a @Component.
 3. Implement REST endpoints:
    * GET /api/events – list all events.
    * GET /api/events/{id} – details for a single event.
-4. Preload 3–5 hard-coded events at startup (e.g. via a DataInitializer bean).
+4. Preload 3–5 hard-coded events at startup (e.g., via `@PostConstruct`).
 
 **Testing focus**
-* •	Write tests for:
-  * ◦	GET /api/events returns the seeded events.
-  * ◦	GET /api/events/{id}:
+* Write tests for:
+  * GET /api/events returns the seeded events.
+  * GET /api/events/{id}:
     * ▪	Returns 200 for existing id.
     * ▪	Returns 404 for unknown id (implement basic error handling).
 
