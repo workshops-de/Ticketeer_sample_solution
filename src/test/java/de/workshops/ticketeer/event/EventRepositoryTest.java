@@ -9,10 +9,9 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.data.jpa.test.autoconfigure.DataJpaTest;
 import org.springframework.boot.testcontainers.service.connection.ServiceConnection;
-import org.testcontainers.containers.PostgreSQLContainer;
 import org.testcontainers.junit.jupiter.Container;
 import org.testcontainers.junit.jupiter.Testcontainers;
-import org.testcontainers.shaded.org.checkerframework.checker.units.qual.A;
+import org.testcontainers.postgresql.PostgreSQLContainer;
 
 @DataJpaTest
 @Testcontainers
@@ -20,8 +19,8 @@ class EventRepositoryTest {
 
   @Container
   @ServiceConnection
-  static PostgreSQLContainer<?> postgreSQLContainer
-      = new PostgreSQLContainer<>("postgres:latest")
+  static PostgreSQLContainer postgreSQLContainer
+      = new PostgreSQLContainer("postgres:latest")
       .withReuse(true);
 
   @Autowired
@@ -61,6 +60,6 @@ class EventRepositoryTest {
     var firstEvent = eventRepository.findById(savedEvent.getId());
 
     assertTrue(firstEvent.isPresent());
-    assertEquals("Another sample event",firstEvent.get().getName());
+    assertEquals("Another sample event", firstEvent.get().getName());
   }
 }

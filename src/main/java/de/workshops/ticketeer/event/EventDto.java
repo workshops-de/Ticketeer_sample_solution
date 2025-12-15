@@ -10,4 +10,5 @@ public record EventDto(
     BigDecimal basePrice,
     String currency
 ) {
+
 }
