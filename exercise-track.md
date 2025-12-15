@@ -66,7 +66,7 @@
 3. Add a configuration properties class:
     * TicketeerProperties with prefix ticketeer.
     * Fields like startupBannerEnabled, defaultCurrency, etc.
-4. Use these properties in your controller or service (e.g. include defaultCurrency in event responses).
+4. Use these properties in your controller (e.g. include defaultCurrency in event responses).
 
 **Testing focus**
 * Add a **configuration test**:
