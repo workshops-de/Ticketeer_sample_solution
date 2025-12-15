@@ -10,7 +10,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 class TicketeerPropertiesDefaultTest {
 
     @Autowired
-    TicketeerProperties ticketeerProperties;
+    private TicketeerProperties ticketeerProperties;
 
     @Test
     void testTicketeerProperties() {

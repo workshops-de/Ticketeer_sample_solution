@@ -10,8 +10,9 @@ import static org.assertj.core.api.Assertions.assertThat;
 @SpringBootTest
 @ActiveProfiles("prod")
 class TicketeerPropertiesProductionTest {
+
     @Autowired
-    TicketeerProperties ticketeerProperties;
+    private TicketeerProperties ticketeerProperties;
 
     @Test
     void testTicketeerProperties() {

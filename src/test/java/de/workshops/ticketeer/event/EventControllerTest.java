@@ -3,6 +3,7 @@ package de.workshops.ticketeer.event;
 import static org.hamcrest.Matchers.hasSize;
 import static org.hamcrest.Matchers.is;
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
@@ -15,6 +16,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.webmvc.test.autoconfigure.AutoConfigureMockMvc;
 import org.springframework.boot.webmvc.test.autoconfigure.WebMvcTest;
 import org.springframework.context.annotation.Import;
+import org.springframework.test.context.bean.override.mockito.MockitoBean;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 import org.testcontainers.utility.TestcontainersConfiguration;
@@ -22,18 +24,22 @@ import tools.jackson.core.type.TypeReference;
 import tools.jackson.databind.ObjectMapper;
 
 @WebMvcTest
-@Import(EventRepository.class)
 @AutoConfigureMockMvc
-public class EventControllerTest {
+class EventControllerTest {
 
   @Autowired
-  MockMvc mockMvc;
+  private MockMvc mockMvc;
 
   @Autowired
-  ObjectMapper objectMapper;
+  private ObjectMapper objectMapper;
+
+  @MockitoBean
+  private EventRepository eventRepository;
 
   @Test
   void getEvents() throws Exception {
+    when(eventRepository.findAll()).thenReturn(mockEvents());
+
     var eventsResult = mockMvc
         .perform(get("/api/events"))
         .andDo(print())
@@ -51,6 +57,10 @@ public class EventControllerTest {
 
   @Test
   void getEvent() throws Exception {
+    when(eventRepository.findById(2L)).thenReturn(
+        mockEvents().stream().filter(e -> e.getId().equals(2L)).findFirst()
+    );
+
     var eventResult = mockMvc
         .perform(get("/api/events/2"))
         .andDo(print())
@@ -71,5 +81,13 @@ public class EventControllerTest {
         .andDo(print())
         .andExpect(status().isNotFound())
         .andReturn();
+  }
+
+  private List<Event> mockEvents() {
+    return List.of(
+        Event.builder().id(1L).name("Rock Concert").venue("Stadium A").build(),
+        Event.builder().id(2L).name("Jazz Festival").venue("Park B").build(),
+        Event.builder().id(3L).name("Classical Night").venue("Concert Hall C").build()
+    );
   }
 }

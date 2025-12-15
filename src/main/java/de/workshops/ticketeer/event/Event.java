@@ -1,10 +1,15 @@
 package de.workshops.ticketeer.event;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.Objects;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
@@ -17,9 +22,13 @@ import org.hibernate.proxy.HibernateProxy;
 @Setter
 @ToString
 @RequiredArgsConstructor
+@AllArgsConstructor
+@Builder
 class Event {
 
   @Id
+  @GeneratedValue(strategy = GenerationType.IDENTITY)
+  @JsonIgnore
   Long id;
 
   String name;

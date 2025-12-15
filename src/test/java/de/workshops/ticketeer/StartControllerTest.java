@@ -34,13 +34,13 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 class StartControllerTest {
 
     @Autowired
-    MockMvc mockMvc;
+    private MockMvc mockMvc;
 
     @Autowired
-    MockMvcTester mockMvcTester;
+    private MockMvcTester mockMvcTester;
 
     @Autowired
-    RestTestClient restTestClient;
+    private RestTestClient restTestClient;
 
     // MockMvc relies on Hamcrest assertions
     @Test
