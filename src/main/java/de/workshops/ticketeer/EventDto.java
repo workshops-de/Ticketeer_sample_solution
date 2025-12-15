@@ -8,7 +8,8 @@ public record EventDto(
     String name,
     String venue,
     LocalDateTime startDateTime,
-    BigDecimal basePrice
+    BigDecimal basePrice,
+    String currency
 ) {
 
 }

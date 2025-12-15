@@ -1,0 +1,9 @@
+======================================================================
+${ticketeer.name}
+${ticketeer.description}
+You can find tickets for categories like ${ticketeer.categories[0]}, ${ticketeer.categories[1]}, ${ticketeer.categories[2]}, ${ticketeer.categories[3]}, ${ticketeer.categories[4]}, ${ticketeer.categories[5]}.
+Paying in ${ticketeer.currency}.
+
+This is ${ticketeer.name} version ${ticketeer.version}.
+You run in environment: ${ticketeer.environment}
+======================================================================

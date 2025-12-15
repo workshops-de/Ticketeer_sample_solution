@@ -1,0 +1,17 @@
+spring:
+  application:
+    name: Ticketeer
+
+ticketeer:
+  version: 1
+  name: ${spring.application.name}
+  description: Your one stop ticket shop!
+  currency: EUR
+  categories:
+    - Music
+    - Theater
+    - Opera
+    - Sport
+    - Circus
+    - and more!
+  environment: Default
