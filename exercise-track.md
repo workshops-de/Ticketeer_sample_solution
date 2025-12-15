@@ -89,17 +89,17 @@
 1. Configure **PostgreSQL** datasource via application.yml:
     * spring.datasource.url, username, password (using environment variables or, alternatively, via a production profile).
 2. Define JPA entities:
-    * EventEntity (id, name, venue, startDateTime, basePrice, capacity).
-    * TicketInventoryEntity or simply a numeric field on Event for now.
+    * Event (id, name, venue, startDateTime, basePrice, capacity).
+    * a numeric field on Event for specifying the remaining tickets.
 3. Introduce Spring Data repositories:
-    * EventRepository extends JpaRepository<EventEntity, Long>.
+    * EventRepository extends ListCrudRepository<EventEntity, Long>.
 4. Replace in-memory repository logic in REST endpoints with database-backed repositories.
 
 
 **Testing focus**
 * Write a **JPA repository test**:
     * Use @DataJpaTest.
-    * Persist a sample EventEntity.
+    * Persist a sample Event.
     * Verify queries (find by id, find all).
 * Optional: Use **Testcontainers** for PostgreSQL in tests instead of H2.
 
