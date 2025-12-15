@@ -1,5 +1,6 @@
 package de.workshops.ticketeer;
 
+import de.workshops.ticketeer.config.TicketeerProperties;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;

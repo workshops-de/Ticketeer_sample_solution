@@ -1,4 +1,4 @@
-package de.workshops.ticketeer;
+package de.workshops.ticketeer.event;
 
 import java.util.NoSuchElementException;
 import lombok.extern.slf4j.Slf4j;
@@ -7,9 +7,9 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 
 @ResponseStatus(HttpStatus.NOT_FOUND)
 @Slf4j
-class NotFoundException extends NoSuchElementException {
+class EventNotFoundException extends NoSuchElementException {
 
-  NotFoundException() {
+  EventNotFoundException() {
     super();
 
     log.error("Book not found");
