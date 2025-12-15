@@ -1,4 +1,4 @@
-package de.workshops.ticketeer;
+package de.workshops.ticketeer.event;
 
 import static org.hamcrest.Matchers.hasSize;
 import static org.hamcrest.Matchers.is;
@@ -8,9 +8,6 @@ import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-import de.workshops.ticketeer.event.EventController;
-import de.workshops.ticketeer.event.EventDto;
-import de.workshops.ticketeer.event.EventRepository;
 import java.util.List;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
