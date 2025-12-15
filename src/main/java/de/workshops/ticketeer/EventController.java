@@ -26,6 +26,6 @@ public class EventController {
             .stream()
             .filter(event -> Objects.equals(event.id(), id))
             .findFirst()
-            .orElseThrow(() -> new RuntimeException("Event not found"));
+            .orElseThrow(NotFoundException::new);
     }
 }

@@ -62,4 +62,13 @@ public class EventControllerTest {
     EventDto event = objectMapper.readValue(jsonPayload, EventDto.class);
     assertEquals("Jazz Festival", event.name());
   }
+
+  @Test
+  void getNonExistingEvent() throws Exception {
+    mockMvc
+        .perform(get("/api/events/5"))
+        .andDo(print())
+        .andExpect(status().isNotFound())
+        .andReturn();
+  }
 }
