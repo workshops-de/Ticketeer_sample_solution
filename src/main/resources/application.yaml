@@ -3,7 +3,7 @@ spring:
     name: Ticketeer
 
   datasource:
-    url: jdbc:postgresql://localhost:5432/ticketeer_db
+    url: jdbc:postgresql://localhost:5432/postgres
     username: postgres
     # set TICKETEER_DB_PASSWORD in your environment, e.g., by running "export TICKETEER_DB_PASSWORD=..." in the command line
     password: ${TICKETEER_DB_PASSWORD}
