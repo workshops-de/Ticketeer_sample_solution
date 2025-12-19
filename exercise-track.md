@@ -107,11 +107,13 @@
 * Optional: Use **Testcontainers** for PostgreSQL in tests instead of H2.
 
 ⠀
-### Exercise 2.1 – Database schema evolution (Flyway or Liquibase)
+
+### Exercise 2.1 – Database schema evolution using Flyway
 **Story hook:** Ticketeer is evolving constantly. Schema changes must be manageable and trackable.
 
 **Tasks**
-1. Add Flyway (or Liquibase) to the project.
+
+1. Add Flyway to the project.
 2. Create an initial migration:
     * V1__initial_schema.sql with events table.
 3. Remove any ddl-auto=create from config or restrict it to tests only.
