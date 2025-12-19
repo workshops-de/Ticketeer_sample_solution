@@ -12,6 +12,6 @@ class EventNotFoundException extends NoSuchElementException {
   EventNotFoundException() {
     super();
 
-    log.error("Book not found");
+    log.error("Event not found");
   }
 }

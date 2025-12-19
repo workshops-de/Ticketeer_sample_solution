@@ -1,28 +1,16 @@
 package de.workshops.ticketeer.event;
 
-import org.junit.jupiter.api.Test;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.data.jpa.test.autoconfigure.DataJpaTest;
-import org.springframework.boot.testcontainers.service.connection.ServiceConnection;
-import org.testcontainers.junit.jupiter.Container;
-import org.testcontainers.junit.jupiter.Testcontainers;
-import org.testcontainers.postgresql.PostgreSQLContainer;
-
-import java.math.BigDecimal;
-import java.time.LocalDateTime;
-
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-@DataJpaTest
-@Testcontainers
-class EventRepositoryTest {
+import java.math.BigDecimal;
+import java.time.LocalDateTime;
+import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.data.jpa.test.autoconfigure.DataJpaTest;
 
-    @Container
-    @ServiceConnection
-    static PostgreSQLContainer postgreSQLContainer
-            = new PostgreSQLContainer("postgres:latest")
-            .withReuse(true);
+@DataJpaTest
+class EventRepositoryTest {
 
     @Autowired
     private EventRepository eventRepository;
