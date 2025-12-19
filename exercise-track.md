@@ -130,7 +130,8 @@
         * Only allowed if status is DRAFT.
         * Set status to PUBLISHED.
 2. Create endpoint:
-    * POST /api/events/{id}/publish → returns updated event.
+    * PATCH /api/events/{id} → returns updated event.
+    * Send a `@RequestBody` with the new status.
 3. Mark the service method @Transactional.
 
 **Testing focus**
