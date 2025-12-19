@@ -1,5 +1,5 @@
 Project-setup-&-“Hello-Ticketeer”
-Domain-sketch-Events-and-Seat-Inventory-(in-memory-for-now)
+Domain-sketch-Events-and-Ticket-Inventory-(in-memory-for-now)
 Basic-configuration-&-profiles
 PostgreSQL-integration-&-JPA-entities
 Database-schema-evolution-Flyway
