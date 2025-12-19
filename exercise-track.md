@@ -92,7 +92,7 @@
     * Event (id, name, venue, startDateTime, basePrice, capacity).
     * a numeric field on Event for specifying the remaining tickets.
 3. Introduce Spring Data repositories:
-    * EventRepository extends ListCrudRepository<EventEntity, Long>.
+    * EventRepository extends ListCrudRepository<Event, Long>.
 4. Replace in-memory repository logic in REST endpoints with database-backed repositories.
 
 
