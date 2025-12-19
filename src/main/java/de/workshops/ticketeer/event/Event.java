@@ -1,6 +1,7 @@
 package de.workshops.ticketeer.event;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -30,6 +31,7 @@ class Event {
   @JsonIgnore
   Long id;
 
+  @Column(nullable = false)
   String name;
 
   String venue;
@@ -41,6 +43,12 @@ class Event {
   Integer capacity;
 
   Integer remainingTickets;
+
+  /// Additionally you can add a `@Conver(converter = EventStatusConverter.class)` annotation to convert between database and Java types.
+  /// This is only necessary if the `@Converter` annotation in Class `EventStatusConverter` is NOT set to `autoApply = true`.
+  @Column(nullable = false, columnDefinition = "varchar(255) default 'DRAFT'")
+  @Builder.Default
+  EventStatus status = EventStatus.DRAFT;
 
   @Override
   public final boolean equals(Object o) {
