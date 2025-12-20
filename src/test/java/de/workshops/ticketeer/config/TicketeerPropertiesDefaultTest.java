@@ -2,12 +2,13 @@ package de.workshops.ticketeer.config;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+import de.workshops.ticketeer.util.AbstractPostgreSQLTestcontainersTest;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
-class TicketeerPropertiesDefaultTest {
+class TicketeerPropertiesDefaultTest extends AbstractPostgreSQLTestcontainersTest {
 
     @Autowired
     private TicketeerProperties ticketeerProperties;

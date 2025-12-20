@@ -1,12 +1,14 @@
 package de.workshops.ticketeer.event;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
+import de.workshops.ticketeer.util.AbstractPostgreSQLTestcontainersTest;
+import java.math.BigDecimal;
+import java.time.LocalDateTime;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.data.jpa.test.autoconfigure.DataJpaTest;
-import org.springframework.boot.testcontainers.service.connection.ServiceConnection;
-import org.testcontainers.junit.jupiter.Container;
-import org.testcontainers.junit.jupiter.Testcontainers;
-import org.testcontainers.postgresql.PostgreSQLContainer;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
@@ -15,14 +17,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 @DataJpaTest
-@Testcontainers
-class EventRepositoryTest {
-
-    @Container
-    @ServiceConnection
-    static PostgreSQLContainer postgreSQLContainer
-            = new PostgreSQLContainer("postgres:latest")
-            .withReuse(true);
+class EventRepositoryTest extends AbstractPostgreSQLTestcontainersTest {
 
     @Autowired
     private EventRepository eventRepository;
@@ -46,9 +41,9 @@ class EventRepositoryTest {
     }
 
     @Test
-//  As an alternative to programmatically saving an event to the database, you can use the @Sql annotation to load SQL scripts into the database before each test method is executed.
-//  @Sql(statements = "INSERT INTO event (id, name, venue, base_price, capacity, start_date_time, remaining_tickets, status) VALUES (2, 'Another sample event', 'Some venue', 50.0, 100, NOW() + INTERVAL '10 days', 100, 'PUBLISHED')")
-//  @Sql(statements = "DELETE FROM event", executionPhase = Sql.ExecutionPhase.AFTER_TEST_METHOD)
+    //  As an alternative to programmatically saving an event to the database, you can use the @Sql annotation to load SQL scripts into the database before each test method is executed.
+    //  @Sql(statements = "INSERT INTO event (id, name, venue, base_price, capacity, start_date_time, remaining_tickets, status) VALUES (2, 'Another sample event', 'Some venue', 50.0, 100, NOW() + INTERVAL '10 days', 100, 'PUBLISHED')")
+    //  @Sql(statements = "DELETE FROM event", executionPhase = Sql.ExecutionPhase.AFTER_TEST_METHOD)
     void findEventById() {
         var savedEvent = eventRepository.save(
                 Event.builder()
