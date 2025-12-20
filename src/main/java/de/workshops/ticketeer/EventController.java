@@ -24,9 +24,9 @@ public class EventController {
     @GetMapping("/{id}")
     public EventDto getEvent(@PathVariable Long id) {
         return eventRepository.getEvents()
-                .stream()
-                .filter(event -> Objects.equals(event.id(), id))
-                .findFirst()
-                .orElseThrow(NotFoundException::new);
+            .stream()
+            .filter(event -> Objects.equals(event.id(), id))
+            .findFirst()
+            .orElseThrow(EventNotFoundException::new);
     }
 }
