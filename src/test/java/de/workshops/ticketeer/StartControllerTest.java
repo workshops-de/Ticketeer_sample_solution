@@ -11,8 +11,8 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.resttestclient.autoconfigure.AutoConfigureRestTestClient;
-import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.webmvc.test.autoconfigure.AutoConfigureMockMvc;
+import org.springframework.boot.webmvc.test.autoconfigure.WebMvcTest;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.assertj.MockMvcTester;
@@ -30,7 +30,7 @@ import org.springframework.test.web.servlet.client.RestTestClient;
 /// `@AutoConfigureMockMvc` annotation is needed, when we want to use MockMvc or MockMvcTester.
 ///
 /// `@AutoConfigureRestTestClient` annotation is needed, when we want to use RestTestClient.
-@SpringBootTest
+@WebMvcTest(controllers = StartController.class)
 @AutoConfigureMockMvc
 @AutoConfigureRestTestClient
 class StartControllerTest {
