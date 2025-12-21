@@ -6,9 +6,6 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import java.math.BigDecimal;
-import java.time.LocalDateTime;
-import java.util.Objects;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -17,6 +14,10 @@ import lombok.Setter;
 import lombok.ToString;
 import org.hibernate.proxy.HibernateProxy;
 
+import java.math.BigDecimal;
+import java.time.LocalDateTime;
+import java.util.Objects;
+
 @Entity
 @Getter
 @Setter
@@ -24,7 +25,7 @@ import org.hibernate.proxy.HibernateProxy;
 @RequiredArgsConstructor
 @AllArgsConstructor
 @Builder
-class Event {
+public class Event {
 
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)

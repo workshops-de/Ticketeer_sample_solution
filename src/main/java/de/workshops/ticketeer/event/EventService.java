@@ -1,7 +1,10 @@
 package de.workshops.ticketeer.event;
 
+import de.workshops.ticketeer.NotificationException;
+import de.workshops.ticketeer.reservation.ReservationCreatedEvent;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.event.EventListener;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -37,6 +40,18 @@ class EventService {
 
         event.setStatus(EventStatus.valueOf(eventStatusDto.status()));
         return mapEventToEventDto(eventRepository.save(event));
+    }
+
+    @EventListener
+    void handleReservationCreated(ReservationCreatedEvent reservationCreatedEvent) {
+        var event = eventRepository.findById(reservationCreatedEvent.getEventId()).orElseThrow(() -> new InvalidTransitionException("Event not found"));
+
+        if (event.getRemainingTickets() < reservationCreatedEvent.getQuantity()) {
+            throw new NotificationException("Not enough tickets left");
+        }
+
+        event.setRemainingTickets(event.getRemainingTickets() - reservationCreatedEvent.getQuantity());
+        eventRepository.save(event);
     }
 
     private EventDto mapEventToEventDto(Event event) {

@@ -11,7 +11,7 @@ public class EventStatusConverter implements AttributeConverter<EventStatus, Str
     }
 
     @Override
-    public EventStatus convertToEntityAttribute(String s) {
-        return EventStatus.valueOf(s);
+    public EventStatus convertToEntityAttribute(String eventStatusName) {
+        return EventStatus.valueOf(eventStatusName);
     }
 }
