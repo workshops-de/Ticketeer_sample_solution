@@ -183,12 +183,12 @@
     * POST /api/event/{id}/reservation with JSON { "tickets": 2 }
         * Returns ReservationDto (with fields like reservationId, eventId, numberReservedTickets,
           reservedUntil).
-    * ◦ POST /api/reservation/{id}/order with payment info (simplified).
-        * ▪ Creates an order and marks reservation as CONFIRMED + order PAID (for now, simulate
+   * POST /api/reservation/{id}/order with payment info (simplified).
+       * Creates an order and marks reservation as CONFIRMED + order PAID (for now, simulate
           payment).
 2. Ensure proper HTTP semantics:
-    * ◦ 201 Created when reservation/order created.
-    * ◦ Reasonable errors for invalid event or reservation.
+    * 201 Created when reservation/order created.
+    * Reasonable errors for invalid event or reservation.
 
 **Testing focus**
 * **Integration tests** (@SpringBootTest + Testcontainers or in-memory DB):
