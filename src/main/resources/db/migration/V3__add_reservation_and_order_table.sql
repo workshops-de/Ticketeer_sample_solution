@@ -18,6 +18,7 @@ CREATE TABLE reservation
     reserved_at        date,
     expires_at         date,
     quantity           INTEGER                                 NOT NULL,
+    single_price       DECIMAL                                 NOT NULL,
     status             VARCHAR(255) DEFAULT 'PENDING'          NOT NULL,
     CONSTRAINT pk_reservation PRIMARY KEY (id)
 );

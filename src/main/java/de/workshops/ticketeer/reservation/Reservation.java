@@ -17,6 +17,7 @@ import lombok.Setter;
 import lombok.ToString;
 import org.hibernate.proxy.HibernateProxy;
 
+import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.Objects;
 import java.util.UUID;
@@ -42,6 +43,9 @@ public class Reservation {
     private LocalDate reservedAt;
     private LocalDate expiresAt;
     private int quantity;
+
+    @Column(nullable = false)
+    private BigDecimal singlePrice;
 
     @Column(nullable = false, columnDefinition = "varchar(255) default 'PENDING'")
     @Builder.Default

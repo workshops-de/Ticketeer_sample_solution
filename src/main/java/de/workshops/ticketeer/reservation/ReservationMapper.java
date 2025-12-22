@@ -12,6 +12,7 @@ class ReservationMapper implements Function<Reservation, ReservationDto> {
             reservation.getReservedAt(),
             reservation.getExpiresAt(),
             reservation.getQuantity(),
+            reservation.getSinglePrice(),
             reservation.getStatus()
         );
     }
