@@ -52,6 +52,7 @@ class EventService {
 
         event.setRemainingTickets(event.getRemainingTickets() - reservationEvent.getQuantity());
         eventRepository.save(event);
+        reservationEvent.notifyResult(event.getBasePrice());
     }
 
     private EventDto mapEventToEventDto(Event event) {

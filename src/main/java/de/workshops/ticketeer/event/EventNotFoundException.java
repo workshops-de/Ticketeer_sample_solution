@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 
 @ResponseStatus(HttpStatus.NOT_FOUND)
 @Slf4j
-class EventNotFoundException extends NoSuchElementException {
+public class EventNotFoundException extends NoSuchElementException {
 
   EventNotFoundException() {
     super();

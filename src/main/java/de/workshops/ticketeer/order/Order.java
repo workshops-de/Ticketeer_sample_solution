@@ -1,6 +1,5 @@
 package de.workshops.ticketeer.order;
 
-import de.workshops.ticketeer.event.Event;
 import de.workshops.ticketeer.reservation.Reservation;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;

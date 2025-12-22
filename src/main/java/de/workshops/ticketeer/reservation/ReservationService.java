@@ -3,8 +3,10 @@ package de.workshops.ticketeer.reservation;
 import de.workshops.ticketeer.NotificationException;
 import de.workshops.ticketeer.event.Event;
 import de.workshops.ticketeer.event.InvalidTransitionException;
+import de.workshops.ticketeer.order.ReservationOrderEvent;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.ApplicationEventPublisher;
+import org.springframework.context.event.EventListener;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -30,7 +32,11 @@ class ReservationService {
 
         try {
             // Publish reservation created event (synchronously)
-            eventPublisher.publishEvent(new ReservationEvent(this, reservationRequest.eventId(), reservationRequest.quantity()));
+            eventPublisher.publishEvent(new ReservationEvent(
+                this,
+                reservationRequest.eventId(),
+                reservationRequest.quantity(),
+                reservation::setSinglePrice));
             var saved = reservationRepository.save(reservation);
             return new ReservationMapper().apply(saved);
         } catch (NotificationException e) {
@@ -39,8 +45,22 @@ class ReservationService {
     }
 
     ReservationDto confirmReservation(UUID reservationNumber) {
-        var reservation = reservationRepository.findByReservationNumberAndStatus(reservationNumber, ReservationStatus.PENDING).orElseThrow(() -> new ReservationNotFoundException("Reservation not found"));
-        reservation.setStatus(ReservationStatus.CONFIRMED);
-        return new ReservationMapper().apply(reservationRepository.save(reservation));
+        return new ReservationMapper().apply(setReservationConfirmed(reservationNumber));
     }
+
+    @EventListener(ReservationOrderEvent.class)
+    void changeReservationStatus(ReservationOrderEvent event) {
+        var reservation = setReservationConfirmed(event.getReservationNumber());
+        event.notifyResult(reservation);
+    }
+
+    private Reservation setReservationConfirmed(UUID reservationNumber) {
+        var reservation = reservationRepository.findByReservationNumberAndStatus(reservationNumber, ReservationStatus.PENDING).orElseThrow(() -> new ReservationNotFoundException("Reservation not found"));
+        if (reservation.getExpiresAt().isBefore(LocalDate.now())) {
+            throw new ReservationExpiredException("Reservation expired");
+        }
+        reservation.setStatus(ReservationStatus.CONFIRMED);
+        return reservationRepository.save(reservation);
+    }
+
 }

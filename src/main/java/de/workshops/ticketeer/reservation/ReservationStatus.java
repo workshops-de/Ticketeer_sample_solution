@@ -1,5 +1,5 @@
 package de.workshops.ticketeer.reservation;
 
-enum ReservationStatus {
+public enum ReservationStatus {
     PENDING, EXPIRED, CONFIRMED
 }
