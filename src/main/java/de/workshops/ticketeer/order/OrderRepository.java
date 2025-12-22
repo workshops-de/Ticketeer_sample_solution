@@ -1,6 +1,6 @@
 package de.workshops.ticketeer.order;
 
-import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.repository.ListCrudRepository;
 
-interface OrderRepository extends JpaRepository<Order, Long> {
+interface OrderRepository extends ListCrudRepository<Order, Long> {
 }

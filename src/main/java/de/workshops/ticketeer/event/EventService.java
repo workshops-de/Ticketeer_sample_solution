@@ -44,7 +44,7 @@ class EventService {
 
     @EventListener
     void handleReservationCreated(ReservationCreatedEvent reservationCreatedEvent) {
-        var event = eventRepository.findById(reservationCreatedEvent.getEventId()).orElseThrow(() -> new InvalidTransitionException("Event not found"));
+        var event = eventRepository.findById(reservationCreatedEvent.getEventId()).orElseThrow(EventNotFoundException::new);
 
         if (event.getRemainingTickets() < reservationCreatedEvent.getQuantity()) {
             throw new NotificationException("Not enough tickets left");

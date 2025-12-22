@@ -6,17 +6,19 @@ import de.workshops.ticketeer.event.InvalidTransitionException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
 import java.util.UUID;
 
 @Service
 @RequiredArgsConstructor
-public class ReservationService {
+class ReservationService {
 
     private final ReservationRepository reservationRepository;
     private final ApplicationEventPublisher eventPublisher;
 
+    @Transactional
     ReservationDto createReservation(ReservationRequest reservationRequest) {
         var reservation = Reservation.builder()
             .event(Event.builder().id(reservationRequest.eventId()).build())
