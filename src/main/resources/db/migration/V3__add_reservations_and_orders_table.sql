@@ -26,7 +26,7 @@ CREATE TABLE reservations
 ALTER TABLE orders
     ADD CONSTRAINT uc_orders_reservations UNIQUE (reservation_id);
 
-ALTER TABLE "order"
+ALTER TABLE orders
     ADD CONSTRAINT FK_ORDERS_ON_RESERVATIONS FOREIGN KEY (reservation_id) REFERENCES reservations (id);
 
 ALTER TABLE reservations
