@@ -71,8 +71,8 @@ public class Reservation {
         if (thisEffectiveClass != oEffectiveClass) {
             return false;
         }
-        Event event = (Event) o;
-        return getId() != null && Objects.equals(getId(), event.getId());
+        Reservation reservation = (Reservation) o;
+        return getId() != null && Objects.equals(getId(), reservation.getId());
     }
 
     @Override

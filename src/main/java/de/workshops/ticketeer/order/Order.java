@@ -68,8 +68,8 @@ public class Order {
         if (thisEffectiveClass != oEffectiveClass) {
             return false;
         }
-        Event event = (Event) o;
-        return getId() != null && Objects.equals(getId(), event.getId());
+        Order order = (Order) o;
+        return getId() != null && Objects.equals(getId(), order.getId());
     }
 
     @Override
