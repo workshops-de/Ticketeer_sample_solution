@@ -30,7 +30,7 @@ class ReservationService {
 
         try {
             // Publish reservation created event (synchronously)
-            eventPublisher.publishEvent(new ReservationCreatedEvent(this, reservationRequest.eventId(), reservationRequest.quantity()));
+            eventPublisher.publishEvent(new ReservationEvent(this, reservationRequest.eventId(), reservationRequest.quantity()));
             var saved = reservationRepository.save(reservation);
             return new ReservationMapper().apply(saved);
         } catch (NotificationException e) {

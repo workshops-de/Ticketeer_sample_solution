@@ -1,7 +1,7 @@
 package de.workshops.ticketeer.event;
 
 import de.workshops.ticketeer.NotificationException;
-import de.workshops.ticketeer.reservation.ReservationCreatedEvent;
+import de.workshops.ticketeer.reservation.ReservationEvent;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.event.EventListener;
@@ -43,14 +43,14 @@ class EventService {
     }
 
     @EventListener
-    void handleReservationCreated(ReservationCreatedEvent reservationCreatedEvent) {
-        var event = eventRepository.findById(reservationCreatedEvent.getEventId()).orElseThrow(EventNotFoundException::new);
+    void handleReservationEvent(ReservationEvent reservationEvent) {
+        var event = eventRepository.findById(reservationEvent.getEventId()).orElseThrow(EventNotFoundException::new);
 
-        if (event.getRemainingTickets() < reservationCreatedEvent.getQuantity()) {
+        if (event.getRemainingTickets() < reservationEvent.getQuantity()) {
             throw new NotificationException("Not enough tickets left");
         }
 
-        event.setRemainingTickets(event.getRemainingTickets() - reservationCreatedEvent.getQuantity());
+        event.setRemainingTickets(event.getRemainingTickets() - reservationEvent.getQuantity());
         eventRepository.save(event);
     }
 

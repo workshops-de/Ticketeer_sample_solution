@@ -4,11 +4,11 @@ import lombok.Getter;
 import org.springframework.context.ApplicationEvent;
 
 @Getter
-public class ReservationCreatedEvent extends ApplicationEvent {
+public class ReservationEvent extends ApplicationEvent {
     private final Long eventId;
     private final int quantity;
 
-    public ReservationCreatedEvent(ReservationService reservationService, Long eventId, int quantity) {
+    public ReservationEvent(ReservationService reservationService, Long eventId, int quantity) {
         super(reservationService);
         this.eventId = eventId;
         this.quantity = quantity;
