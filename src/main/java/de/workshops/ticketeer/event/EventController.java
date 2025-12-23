@@ -20,7 +20,6 @@ class EventController {
 
     @GetMapping
     List<EventDto> getAllEvents() {
-
         return eventRepository
             .findAll()
             .stream()
