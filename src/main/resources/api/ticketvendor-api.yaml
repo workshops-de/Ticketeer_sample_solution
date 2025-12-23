@@ -1,0 +1,370 @@
+openapi: 3.1.0
+info:
+  title: Ticket Vendor API
+  description: An API for listing events and reserving/ordering tickets for an event
+  version: 1.0.0
+servers:
+  - url: 'http://localhost:3333/ticketventdor/api'
+paths:
+  /event:
+    get:
+      summary: Get all events (by an optional category and/or city)
+      description: |
+        Get a list of all events.
+        If a category is given, then filtered by category.
+        If a city is given, then filtered by city.
+        If both is given then 'and' filtered by category and city.
+      operationId: getAllEvents
+      parameters:
+        - name: category
+          in: query
+          required: false
+          schema:
+            $ref: "#/components/schemas/EventCategory"
+        - name: city
+          in: query
+          required: false
+          schema:
+            type: string
+      responses:
+        '200':
+          description: List of found events.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Event'
+        '204':
+          description: No events found for the given criteria
+        '400':
+          description: Unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorModel'
+  /event/{id}:
+    get:
+      description: Get details for a certain event, identified by ID
+      operationId: getEvent
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+      responses:
+        '200':
+          description: Event details.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Event'
+        '204':
+          description: No event found for given ID.
+        '400':
+          description: Unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorModel'
+  /event/{id}/order:
+    post:
+      description: Order tickets for a certain event.
+      operationId: orderEventTickets
+      parameters:
+        - name: id
+          description: the event id
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/TicketOrderRequest'
+      responses:
+        '201':
+          description: Ticket/s successfully ordered
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TicketOrderResponse'
+        '400':
+          description: Not enough tickets available or event sold out
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TicketError'
+        '404':
+          description: Not found, i.e. event id not found
+        default:
+          description: Unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorModel'
+  /event/{id}/reserve:
+    post:
+      description: Reserve tickets for a certain event.
+      operationId: reserveEventTickets
+      parameters:
+        - name: id
+          description: the event id
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/TicketReservationRequest'
+      responses:
+        '201':
+          description: Ticket/s successfully reserved
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TicketReservationResponse'
+        '400':
+          description: Not enough tickets available or event sold out
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TicketError'
+        '404':
+          description: Not found, i.e. event id not found
+        default:
+          description: Unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorModel'
+
+components:
+  schemas:
+    Event:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        name:
+          type: string
+        artists:
+          type: array
+          items:
+            $ref: '#/components/schemas/Artist'
+        category:
+          $ref: "#/components/schemas/EventCategory"
+        date:
+          type: string
+          format: date-time
+        location:
+          $ref: "#/components/schemas/Location"
+        tickets:
+          type: array
+          items:
+            $ref: '#/components/schemas/Ticket'
+        status:
+          $ref: "#/components/schemas/EventStatus"
+      required:
+        - id
+        - name
+        - date
+        - location
+        - tickets
+        - status
+    Artist:
+      type: object
+      properties:
+        name:
+          type: string
+      required:
+        - name
+    Ticket:
+      type: object
+      properties:
+        totalNumber:
+          description: Total number of event tickets for a certain category.
+          type: integer
+          example: 50
+        reserved:
+          description: Number of reserved event tickets for a certain category.
+          type: integer
+          example: 10
+        ordered:
+          description: Number of ordered event tickets for a certain category.
+          type: integer
+          example: 20
+        category:
+          type: string
+          example: "Category 1"
+        price:
+          description: Ticket price in this category
+          $ref: '#/components/schemas/Price'
+      required:
+        - totalNumber
+        - price
+    TicketOrderRequest:
+      type: object
+      properties:
+        category:
+          type: string
+        number:
+          type: integer
+          minimum: 1
+      required:
+        - number
+    TicketOrderResponse:
+      type: object
+      properties:
+        id:
+          description: order ID
+          type: string
+          format: uuid
+        date:
+          description: order date/time
+          type: string
+          format: date-time
+        number:
+          type: integer
+          minimum: 1
+        ticketPrice:
+          $ref: "#/components/schemas/Price"
+        totalPrice:
+          $ref: "#/components/schemas/Price"
+      required:
+        - id
+        - date
+        - number
+        - ticketPrice
+        - totalPrice
+    TicketReservationRequest:
+      type: object
+      properties:
+        category:
+          type: string
+        number:
+          type: integer
+          minimum: 1
+      required:
+        - number
+    TicketReservationResponse:
+      type: object
+      properties:
+        id:
+          description: reservation ID
+          type: string
+          format: UUID
+        validUntil:
+          type: string
+          format: date-time
+        number:
+          type: integer
+          minimum: 1
+        ticketPrice:
+          $ref: "#/components/schemas/Price"
+        totalPrice:
+          $ref: "#/components/schemas/Price"
+      required:
+        - id
+        - validUntil
+        - number
+        - ticketPrice
+        - totalPrice
+    TicketError:
+      type: object
+      properties:
+        reason:
+          type: string
+        detail:
+          type: string
+      required:
+        - reason
+    Location:
+      description: Event location
+      type: object
+      properties:
+        name:
+          type: string
+        address:
+          $ref: "#/components/schemas/Address"
+        geolocation:
+          $ref: "#/components/schemas/Geolocation"
+      required:
+        - name
+    Address:
+      type: object
+      properties:
+        city:
+          type: string
+        postcode:
+          type: string
+        address:
+          type: string
+      required:
+        - city
+    Geolocation:
+      type: object
+      properties:
+        latitude:
+          type: number
+          format: double
+          minimum: -90
+          maximum: 90
+          example: 48.1374
+        longitude:
+          type: number
+          format: double
+          minimum: -180
+          maximum: 180
+          example: 11.5755
+      required:
+        - latitude
+        - longitude
+    Price:
+      type: object
+      properties:
+        amount:
+          type: number
+          format: decimal
+          exclusiveMinimum: 0
+        currency:
+          type: string
+          format: iso-4217
+          example: "EUR"
+      required:
+        - amount
+        - currency
+    ErrorModel:
+      type: object
+      properties:
+        name:
+          type: string
+        detail:
+          type: string
+      required:
+        - name
+    EventCategory:
+      type: string
+      enum:
+        - music
+        - circus
+        - theater
+        - opera
+        - sport
+        - other
+    EventStatus:
+      type: string
+      enum:
+        - announced
+        - open
+        - sold out
