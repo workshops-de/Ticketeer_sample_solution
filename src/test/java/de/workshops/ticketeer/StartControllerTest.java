@@ -23,9 +23,10 @@ import org.springframework.test.web.servlet.client.RestTestClient;
 /// - with MockMvcTester
 /// - with RestTestClient
 ///
-/// In all 3 cases no dependency to the tested controller class is needed. This is because the
-/// SpringBootTest annotation creates a TestApplicationContext before the test is executed. The
-/// TestApplicationContext contains all beans that are configured in the application context.
+/// In all 3 cases no direct instantiation of the tested controller class is needed. This is because
+/// the `@WebMvcTest` annotation creates a minimal web-layer ApplicationContext before the test is
+/// executed, registering only the specified controllers and related MVC infrastructure rather than
+/// all application beans.
 ///
 /// `@AutoConfigureMockMvc` annotation is needed, when we want to use MockMvc or MockMvcTester.
 ///

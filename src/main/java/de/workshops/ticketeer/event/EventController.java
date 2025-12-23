@@ -14,6 +14,7 @@ import java.util.List;
 @RequestMapping("/api/events")
 @RequiredArgsConstructor
 class EventController {
+
     private final EventService eventService;
 
     @GetMapping
