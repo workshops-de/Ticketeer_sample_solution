@@ -28,12 +28,12 @@ import java.util.HashSet;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
-import org.openapitools.client.JSON;
+import lombok.Setter;
 
 /**
  * Price
  */
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2025-12-23T15:26:40.830974+01:00[Europe/Berlin]", comments = "Generator version: 7.7.0")
+@Setter
 public class Price {
 
   public static final String SERIALIZED_NAME_AMOUNT = "amount";
@@ -57,13 +57,8 @@ public class Price {
    *
    * @return amount
    */
-  @javax.annotation.Nonnull
   public BigDecimal getAmount() {
     return amount;
-  }
-
-  public void setAmount(BigDecimal amount) {
-    this.amount = amount;
   }
 
 
@@ -77,13 +72,8 @@ public class Price {
    *
    * @return currency
    */
-  @javax.annotation.Nonnull
   public String getCurrency() {
     return currency;
-  }
-
-  public void setCurrency(String currency) {
-    this.currency = currency;
   }
 
 
@@ -211,26 +201,6 @@ public class Price {
 
       }.nullSafe();
     }
-  }
-
-  /**
-   * Create an instance of Price given an JSON string
-   *
-   * @param jsonString JSON string
-   * @return An instance of Price
-   * @throws IOException if the JSON string is invalid with respect to Price
-   */
-  public static Price fromJson(String jsonString) throws IOException {
-    return JSON.getGson().fromJson(jsonString, Price.class);
-  }
-
-  /**
-   * Convert an instance of Price to an JSON string
-   *
-   * @return JSON string
-   */
-  public String toJson() {
-    return JSON.getGson().toJson(this);
   }
 }
 

@@ -29,12 +29,10 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
 import java.util.UUID;
-import org.openapitools.client.JSON;
 
 /**
  * TicketReservationResponse
  */
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2025-12-23T15:26:40.830974+01:00[Europe/Berlin]", comments = "Generator version: 7.7.0")
 public class TicketReservationResponse {
 
   public static final String SERIALIZED_NAME_ID = "id";
@@ -70,7 +68,6 @@ public class TicketReservationResponse {
    *
    * @return id
    */
-  @javax.annotation.Nonnull
   public UUID getId() {
     return id;
   }
@@ -90,7 +87,6 @@ public class TicketReservationResponse {
    *
    * @return validUntil
    */
-  @javax.annotation.Nonnull
   public OffsetDateTime getValidUntil() {
     return validUntil;
   }
@@ -110,7 +106,6 @@ public class TicketReservationResponse {
    *
    * @return number
    */
-  @javax.annotation.Nonnull
   public Integer getNumber() {
     return number;
   }
@@ -130,7 +125,6 @@ public class TicketReservationResponse {
    *
    * @return ticketPrice
    */
-  @javax.annotation.Nonnull
   public Price getTicketPrice() {
     return ticketPrice;
   }
@@ -150,7 +144,6 @@ public class TicketReservationResponse {
    *
    * @return totalPrice
    */
-  @javax.annotation.Nonnull
   public Price getTotalPrice() {
     return totalPrice;
   }
@@ -300,26 +293,6 @@ public class TicketReservationResponse {
 
       }.nullSafe();
     }
-  }
-
-  /**
-   * Create an instance of TicketReservationResponse given an JSON string
-   *
-   * @param jsonString JSON string
-   * @return An instance of TicketReservationResponse
-   * @throws IOException if the JSON string is invalid with respect to TicketReservationResponse
-   */
-  public static TicketReservationResponse fromJson(String jsonString) throws IOException {
-    return JSON.getGson().fromJson(jsonString, TicketReservationResponse.class);
-  }
-
-  /**
-   * Convert an instance of TicketReservationResponse to an JSON string
-   *
-   * @return JSON string
-   */
-  public String toJson() {
-    return JSON.getGson().toJson(this);
   }
 }
 

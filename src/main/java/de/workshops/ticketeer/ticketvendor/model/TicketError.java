@@ -27,12 +27,10 @@ import java.util.HashSet;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
-import org.openapitools.client.JSON;
 
 /**
  * TicketError
  */
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2025-12-23T15:26:40.830974+01:00[Europe/Berlin]", comments = "Generator version: 7.7.0")
 public class TicketError {
 
   public static final String SERIALIZED_NAME_REASON = "reason";
@@ -56,7 +54,6 @@ public class TicketError {
    *
    * @return reason
    */
-  @javax.annotation.Nonnull
   public String getReason() {
     return reason;
   }
@@ -76,7 +73,6 @@ public class TicketError {
    *
    * @return detail
    */
-  @javax.annotation.Nullable
   public String getDetail() {
     return detail;
   }
@@ -215,26 +211,6 @@ public class TicketError {
 
       }.nullSafe();
     }
-  }
-
-  /**
-   * Create an instance of TicketError given an JSON string
-   *
-   * @param jsonString JSON string
-   * @return An instance of TicketError
-   * @throws IOException if the JSON string is invalid with respect to TicketError
-   */
-  public static TicketError fromJson(String jsonString) throws IOException {
-    return JSON.getGson().fromJson(jsonString, TicketError.class);
-  }
-
-  /**
-   * Convert an instance of TicketError to an JSON string
-   *
-   * @return JSON string
-   */
-  public String toJson() {
-    return JSON.getGson().toJson(this);
   }
 }
 

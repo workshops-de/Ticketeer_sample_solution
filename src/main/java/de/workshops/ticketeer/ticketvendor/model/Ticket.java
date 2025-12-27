@@ -27,12 +27,12 @@ import java.util.HashSet;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
-import org.openapitools.client.JSON;
+import lombok.Setter;
 
 /**
  * Ticket
  */
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2025-12-23T15:26:40.830974+01:00[Europe/Berlin]", comments = "Generator version: 7.7.0")
+@Setter
 public class Ticket {
 
   public static final String SERIALIZED_NAME_TOTAL_NUMBER = "totalNumber";
@@ -68,13 +68,8 @@ public class Ticket {
    *
    * @return totalNumber
    */
-  @javax.annotation.Nonnull
   public Integer getTotalNumber() {
     return totalNumber;
-  }
-
-  public void setTotalNumber(Integer totalNumber) {
-    this.totalNumber = totalNumber;
   }
 
 
@@ -88,13 +83,8 @@ public class Ticket {
    *
    * @return reserved
    */
-  @javax.annotation.Nullable
   public Integer getReserved() {
     return reserved;
-  }
-
-  public void setReserved(Integer reserved) {
-    this.reserved = reserved;
   }
 
 
@@ -108,13 +98,8 @@ public class Ticket {
    *
    * @return ordered
    */
-  @javax.annotation.Nullable
   public Integer getOrdered() {
     return ordered;
-  }
-
-  public void setOrdered(Integer ordered) {
-    this.ordered = ordered;
   }
 
 
@@ -128,13 +113,8 @@ public class Ticket {
    *
    * @return category
    */
-  @javax.annotation.Nullable
   public String getCategory() {
     return category;
-  }
-
-  public void setCategory(String category) {
-    this.category = category;
   }
 
 
@@ -148,13 +128,8 @@ public class Ticket {
    *
    * @return price
    */
-  @javax.annotation.Nonnull
   public Price getPrice() {
     return price;
-  }
-
-  public void setPrice(Price price) {
-    this.price = price;
   }
 
 
@@ -294,26 +269,6 @@ public class Ticket {
 
       }.nullSafe();
     }
-  }
-
-  /**
-   * Create an instance of Ticket given an JSON string
-   *
-   * @param jsonString JSON string
-   * @return An instance of Ticket
-   * @throws IOException if the JSON string is invalid with respect to Ticket
-   */
-  public static Ticket fromJson(String jsonString) throws IOException {
-    return JSON.getGson().fromJson(jsonString, Ticket.class);
-  }
-
-  /**
-   * Convert an instance of Ticket to an JSON string
-   *
-   * @return JSON string
-   */
-  public String toJson() {
-    return JSON.getGson().toJson(this);
   }
 }
 

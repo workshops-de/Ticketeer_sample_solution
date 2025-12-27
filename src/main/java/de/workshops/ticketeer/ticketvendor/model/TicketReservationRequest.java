@@ -27,12 +27,10 @@ import java.util.HashSet;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
-import org.openapitools.client.JSON;
 
 /**
  * TicketReservationRequest
  */
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2025-12-23T15:26:40.830974+01:00[Europe/Berlin]", comments = "Generator version: 7.7.0")
 public class TicketReservationRequest {
 
   public static final String SERIALIZED_NAME_CATEGORY = "category";
@@ -56,7 +54,6 @@ public class TicketReservationRequest {
    *
    * @return category
    */
-  @javax.annotation.Nullable
   public String getCategory() {
     return category;
   }
@@ -76,7 +73,6 @@ public class TicketReservationRequest {
    *
    * @return number
    */
-  @javax.annotation.Nonnull
   public Integer getNumber() {
     return number;
   }
@@ -210,26 +206,6 @@ public class TicketReservationRequest {
 
       }.nullSafe();
     }
-  }
-
-  /**
-   * Create an instance of TicketReservationRequest given an JSON string
-   *
-   * @param jsonString JSON string
-   * @return An instance of TicketReservationRequest
-   * @throws IOException if the JSON string is invalid with respect to TicketReservationRequest
-   */
-  public static TicketReservationRequest fromJson(String jsonString) throws IOException {
-    return JSON.getGson().fromJson(jsonString, TicketReservationRequest.class);
-  }
-
-  /**
-   * Convert an instance of TicketReservationRequest to an JSON string
-   *
-   * @return JSON string
-   */
-  public String toJson() {
-    return JSON.getGson().toJson(this);
   }
 }
 

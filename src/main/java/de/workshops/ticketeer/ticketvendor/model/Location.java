@@ -27,12 +27,12 @@ import java.util.HashSet;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
-import org.openapitools.client.JSON;
+import lombok.Setter;
 
 /**
  * Event location
  */
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2025-12-23T15:26:40.830974+01:00[Europe/Berlin]", comments = "Generator version: 7.7.0")
+@Setter
 public class Location {
 
   public static final String SERIALIZED_NAME_NAME = "name";
@@ -60,13 +60,8 @@ public class Location {
    *
    * @return name
    */
-  @javax.annotation.Nonnull
   public String getName() {
     return name;
-  }
-
-  public void setName(String name) {
-    this.name = name;
   }
 
 
@@ -80,13 +75,8 @@ public class Location {
    *
    * @return address
    */
-  @javax.annotation.Nullable
   public Address getAddress() {
     return address;
-  }
-
-  public void setAddress(Address address) {
-    this.address = address;
   }
 
 
@@ -100,13 +90,8 @@ public class Location {
    *
    * @return geolocation
    */
-  @javax.annotation.Nullable
   public Geolocation getGeolocation() {
     return geolocation;
-  }
-
-  public void setGeolocation(Geolocation geolocation) {
-    this.geolocation = geolocation;
   }
 
 
@@ -244,26 +229,6 @@ public class Location {
 
       }.nullSafe();
     }
-  }
-
-  /**
-   * Create an instance of Location given an JSON string
-   *
-   * @param jsonString JSON string
-   * @return An instance of Location
-   * @throws IOException if the JSON string is invalid with respect to Location
-   */
-  public static Location fromJson(String jsonString) throws IOException {
-    return JSON.getGson().fromJson(jsonString, Location.class);
-  }
-
-  /**
-   * Convert an instance of Location to an JSON string
-   *
-   * @return JSON string
-   */
-  public String toJson() {
-    return JSON.getGson().toJson(this);
   }
 }
 

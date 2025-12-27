@@ -32,12 +32,12 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
 import java.util.UUID;
-import org.openapitools.client.JSON;
+import lombok.Setter;
 
 /**
  * Event
  */
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2025-12-23T15:26:40.830974+01:00[Europe/Berlin]", comments = "Generator version: 7.7.0")
+@Setter
 public class Event {
 
   public static final String SERIALIZED_NAME_ID = "id";
@@ -85,13 +85,8 @@ public class Event {
    *
    * @return id
    */
-  @javax.annotation.Nonnull
   public UUID getId() {
     return id;
-  }
-
-  public void setId(UUID id) {
-    this.id = id;
   }
 
 
@@ -105,13 +100,8 @@ public class Event {
    *
    * @return name
    */
-  @javax.annotation.Nonnull
   public String getName() {
     return name;
-  }
-
-  public void setName(String name) {
-    this.name = name;
   }
 
 
@@ -133,13 +123,8 @@ public class Event {
    *
    * @return artists
    */
-  @javax.annotation.Nullable
   public List<Artist> getArtists() {
     return artists;
-  }
-
-  public void setArtists(List<Artist> artists) {
-    this.artists = artists;
   }
 
 
@@ -153,13 +138,8 @@ public class Event {
    *
    * @return category
    */
-  @javax.annotation.Nullable
   public EventCategory getCategory() {
     return category;
-  }
-
-  public void setCategory(EventCategory category) {
-    this.category = category;
   }
 
 
@@ -173,13 +153,8 @@ public class Event {
    *
    * @return date
    */
-  @javax.annotation.Nonnull
   public OffsetDateTime getDate() {
     return date;
-  }
-
-  public void setDate(OffsetDateTime date) {
-    this.date = date;
   }
 
 
@@ -193,13 +168,8 @@ public class Event {
    *
    * @return location
    */
-  @javax.annotation.Nonnull
   public Location getLocation() {
     return location;
-  }
-
-  public void setLocation(Location location) {
-    this.location = location;
   }
 
 
@@ -221,13 +191,8 @@ public class Event {
    *
    * @return tickets
    */
-  @javax.annotation.Nonnull
   public List<Ticket> getTickets() {
     return tickets;
-  }
-
-  public void setTickets(List<Ticket> tickets) {
-    this.tickets = tickets;
   }
 
 
@@ -241,13 +206,8 @@ public class Event {
    *
    * @return status
    */
-  @javax.annotation.Nonnull
   public EventStatus getStatus() {
     return status;
-  }
-
-  public void setStatus(EventStatus status) {
-    this.status = status;
   }
 
 
@@ -440,26 +400,6 @@ public class Event {
 
       }.nullSafe();
     }
-  }
-
-  /**
-   * Create an instance of Event given an JSON string
-   *
-   * @param jsonString JSON string
-   * @return An instance of Event
-   * @throws IOException if the JSON string is invalid with respect to Event
-   */
-  public static Event fromJson(String jsonString) throws IOException {
-    return JSON.getGson().fromJson(jsonString, Event.class);
-  }
-
-  /**
-   * Convert an instance of Event to an JSON string
-   *
-   * @return JSON string
-   */
-  public String toJson() {
-    return JSON.getGson().toJson(this);
   }
 }
 

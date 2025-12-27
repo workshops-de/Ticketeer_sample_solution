@@ -27,23 +27,42 @@ import java.util.HashSet;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
-import org.openapitools.client.JSON;
+import lombok.Getter;
+import lombok.Setter;
 
 /**
  * Address
  */
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2025-12-23T15:26:40.830974+01:00[Europe/Berlin]", comments = "Generator version: 7.7.0")
+@Setter
+@Getter
 public class Address {
 
   public static final String SERIALIZED_NAME_CITY = "city";
+  /**
+   * -- GETTER -- Get city
+   *
+   * @return city
+   */
   @SerializedName(SERIALIZED_NAME_CITY)
   private String city;
 
   public static final String SERIALIZED_NAME_POSTCODE = "postcode";
+  /**
+   * -- GETTER --
+   *  Get postcode
+   *
+   * @return postcode
+   */
   @SerializedName(SERIALIZED_NAME_POSTCODE)
   private String postcode;
 
   public static final String SERIALIZED_NAME_ADDRESS = "address";
+  /**
+   * -- GETTER --
+   *  Get address
+   *
+   * @return address
+   */
   @SerializedName(SERIALIZED_NAME_ADDRESS)
   private String address;
 
@@ -55,58 +74,16 @@ public class Address {
     return this;
   }
 
-  /**
-   * Get city
-   *
-   * @return city
-   */
-  @javax.annotation.Nonnull
-  public String getCity() {
-    return city;
-  }
-
-  public void setCity(String city) {
-    this.city = city;
-  }
-
 
   public Address postcode(String postcode) {
     this.postcode = postcode;
     return this;
   }
 
-  /**
-   * Get postcode
-   *
-   * @return postcode
-   */
-  @javax.annotation.Nullable
-  public String getPostcode() {
-    return postcode;
-  }
-
-  public void setPostcode(String postcode) {
-    this.postcode = postcode;
-  }
-
 
   public Address address(String address) {
     this.address = address;
     return this;
-  }
-
-  /**
-   * Get address
-   *
-   * @return address
-   */
-  @javax.annotation.Nullable
-  public String getAddress() {
-    return address;
-  }
-
-  public void setAddress(String address) {
-    this.address = address;
   }
 
 
@@ -248,26 +225,6 @@ public class Address {
 
       }.nullSafe();
     }
-  }
-
-  /**
-   * Create an instance of Address given an JSON string
-   *
-   * @param jsonString JSON string
-   * @return An instance of Address
-   * @throws IOException if the JSON string is invalid with respect to Address
-   */
-  public static Address fromJson(String jsonString) throws IOException {
-    return JSON.getGson().fromJson(jsonString, Address.class);
-  }
-
-  /**
-   * Convert an instance of Address to an JSON string
-   *
-   * @return JSON string
-   */
-  public String toJson() {
-    return JSON.getGson().toJson(this);
   }
 }
 

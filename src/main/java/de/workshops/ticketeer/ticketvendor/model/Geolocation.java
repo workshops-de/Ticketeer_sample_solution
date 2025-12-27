@@ -27,12 +27,12 @@ import java.util.HashSet;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
-import org.openapitools.client.JSON;
+import lombok.Setter;
 
 /**
  * Geolocation
  */
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2025-12-23T15:26:40.830974+01:00[Europe/Berlin]", comments = "Generator version: 7.7.0")
+@Setter
 public class Geolocation {
 
   public static final String SERIALIZED_NAME_LATITUDE = "latitude";
@@ -56,13 +56,8 @@ public class Geolocation {
    *
    * @return latitude
    */
-  @javax.annotation.Nonnull
   public Double getLatitude() {
     return latitude;
-  }
-
-  public void setLatitude(Double latitude) {
-    this.latitude = latitude;
   }
 
 
@@ -76,13 +71,8 @@ public class Geolocation {
    *
    * @return longitude
    */
-  @javax.annotation.Nonnull
   public Double getLongitude() {
     return longitude;
-  }
-
-  public void setLongitude(Double longitude) {
-    this.longitude = longitude;
   }
 
 
@@ -205,26 +195,6 @@ public class Geolocation {
 
       }.nullSafe();
     }
-  }
-
-  /**
-   * Create an instance of Geolocation given an JSON string
-   *
-   * @param jsonString JSON string
-   * @return An instance of Geolocation
-   * @throws IOException if the JSON string is invalid with respect to Geolocation
-   */
-  public static Geolocation fromJson(String jsonString) throws IOException {
-    return JSON.getGson().fromJson(jsonString, Geolocation.class);
-  }
-
-  /**
-   * Convert an instance of Geolocation to an JSON string
-   *
-   * @return JSON string
-   */
-  public String toJson() {
-    return JSON.getGson().toJson(this);
   }
 }
 

@@ -27,15 +27,20 @@ import java.util.HashSet;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
-import org.openapitools.client.JSON;
+import lombok.Getter;
 
 /**
  * Artist
  */
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2025-12-23T15:26:40.830974+01:00[Europe/Berlin]", comments = "Generator version: 7.7.0")
+@Getter
 public class Artist {
 
   public static final String SERIALIZED_NAME_NAME = "name";
+  /**
+   * -- GETTER -- Get name
+   *
+   * @return name
+   */
   @SerializedName(SERIALIZED_NAME_NAME)
   private String name;
 
@@ -45,16 +50,6 @@ public class Artist {
   public Artist name(String name) {
     this.name = name;
     return this;
-  }
-
-  /**
-   * Get name
-   *
-   * @return name
-   */
-  @javax.annotation.Nonnull
-  public String getName() {
-    return name;
   }
 
   public void setName(String name) {
@@ -182,26 +177,6 @@ public class Artist {
 
       }.nullSafe();
     }
-  }
-
-  /**
-   * Create an instance of Artist given an JSON string
-   *
-   * @param jsonString JSON string
-   * @return An instance of Artist
-   * @throws IOException if the JSON string is invalid with respect to Artist
-   */
-  public static Artist fromJson(String jsonString) throws IOException {
-    return JSON.getGson().fromJson(jsonString, Artist.class);
-  }
-
-  /**
-   * Convert an instance of Artist to an JSON string
-   *
-   * @return JSON string
-   */
-  public String toJson() {
-    return JSON.getGson().toJson(this);
   }
 }
 
