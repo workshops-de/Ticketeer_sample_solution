@@ -201,8 +201,9 @@
 
 **Tasks**
 1. Given an **OpenAPI spec** (ticket-vendor-api.yaml):
-    * Use OpenAPI Generator to create a client module and an `@HttpExchange` interface.
-2. Write a configuration to have SpringBoot generate a RestClient for you.
+    * Use OpenAPI Generator to create a client module.
+    * Create an `@HttpExchange` interface.
+2. Write a configuration to have Spring Boot instantiate a RestClient for you.
 3. Extend createReservation(...):
     * If event is `externalVendorManaged=true`, also call the vendor API to reserve tickets.
     * If the vendor call fails, roll back your local transaction.
