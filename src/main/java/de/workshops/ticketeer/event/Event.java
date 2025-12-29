@@ -6,6 +6,9 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import java.math.BigDecimal;
+import java.time.LocalDateTime;
+import java.util.Objects;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -13,10 +16,6 @@ import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 import org.hibernate.proxy.HibernateProxy;
-
-import java.math.BigDecimal;
-import java.time.LocalDateTime;
-import java.util.Objects;
 
 @Entity
 @Getter
@@ -45,7 +44,9 @@ public class Event {
 
   Integer remainingTickets;
 
-  /// Additionally you can add a `@Conver(converter = EventStatusConverter.class)` annotation to convert between database and Java types.
+  Boolean externalVendorManaged = false;
+
+  /// Additionally, you can add a `@Conver(converter = EventStatusConverter.class)` annotation to convert between database and Java types.
   /// This is only necessary if the `@Converter` annotation in Class `EventStatusConverter` is NOT set to `autoApply = true`.
   @Column(nullable = false, columnDefinition = "varchar(255) default 'DRAFT'")
   @Builder.Default

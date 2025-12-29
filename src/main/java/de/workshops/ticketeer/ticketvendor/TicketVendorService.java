@@ -6,16 +6,20 @@ import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.Objects;
 import java.util.UUID;
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 
-@Component
-class TicketService implements TicketOrderUseCase, TicketReservationUseCase {
+@Service
+public class TicketVendorService implements TicketOrderUseCase, TicketReservationUseCase {
 
   private final EventService eventService;
+
   private final TicketUpdatePort ticketUpdatePort;
 
-  TicketService(EventService eventService, TicketLoadPort ticketLoadPort,
-      TicketUpdatePort ticketUpdatePort) {
+  TicketVendorService(
+      EventService eventService,
+      TicketLoadPort ticketLoadPort,
+      TicketUpdatePort ticketUpdatePort
+  ) {
     this.eventService = eventService;
     this.ticketUpdatePort = ticketUpdatePort;
   }

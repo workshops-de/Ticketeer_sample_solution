@@ -4,21 +4,25 @@ import de.workshops.ticketeer.NotificationException;
 import de.workshops.ticketeer.event.Event;
 import de.workshops.ticketeer.event.InvalidTransitionException;
 import de.workshops.ticketeer.order.ReservationOrderEvent;
+import de.workshops.ticketeer.ticketvendor.TicketReservationCommand;
+import de.workshops.ticketeer.ticketvendor.TicketVendorService;
+import java.time.LocalDate;
+import java.util.UUID;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.context.event.EventListener;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.time.LocalDate;
-import java.util.UUID;
-
 @Service
 @RequiredArgsConstructor
 class ReservationService {
 
     private final ReservationRepository reservationRepository;
+
     private final ApplicationEventPublisher eventPublisher;
+
+    private final TicketVendorService ticketVendorService;
 
     @Transactional
     ReservationDto createReservation(ReservationRequest reservationRequest) {
@@ -29,6 +33,17 @@ class ReservationService {
             .reservationNumber(UUID.randomUUID())
             .expiresAt(LocalDate.now().plusDays(7))
             .build();
+
+        if (reservation.getEvent().getExternalVendorManaged()) {
+            // Reserve tickets at external ticket vendor
+            ticketVendorService.reserveTickets(
+                new TicketReservationCommand(
+                    reservationRequest.eventId(),
+                    reservationRequest.category(),
+                    reservationRequest.quantity()
+                )
+            );
+        }
 
         try {
             // Publish reservation created event (synchronously)

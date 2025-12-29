@@ -4,7 +4,9 @@ import java.util.UUID;
 import org.jspecify.annotations.NonNull;
 import org.jspecify.annotations.Nullable;
 
-public record TicketReservationCommand(@NonNull UUID eventId, @Nullable String category,
-                                       @NonNull Integer amount) {
-
+public record TicketReservationCommand(
+    @NonNull UUID eventId,
+    @Nullable String category,
+    @NonNull Integer amount
+) {
 }
