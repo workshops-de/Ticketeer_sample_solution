@@ -1,4 +1,4 @@
 package de.workshops.ticketeer.reservation;
 
-record ReservationRequest(Long eventId, int quantity, String category) {
+record ReservationRequest(Long eventId, int quantity) {
 }

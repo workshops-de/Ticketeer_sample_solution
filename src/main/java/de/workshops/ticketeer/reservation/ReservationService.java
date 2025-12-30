@@ -4,8 +4,6 @@ import de.workshops.ticketeer.NotificationException;
 import de.workshops.ticketeer.event.Event;
 import de.workshops.ticketeer.event.InvalidTransitionException;
 import de.workshops.ticketeer.order.ReservationOrderEvent;
-import de.workshops.ticketeer.ticketvendor.TicketReservationCommand;
-import de.workshops.ticketeer.ticketvendor.TicketVendorService;
 import java.time.LocalDate;
 import java.util.UUID;
 import lombok.RequiredArgsConstructor;
@@ -22,8 +20,6 @@ class ReservationService {
 
     private final ApplicationEventPublisher eventPublisher;
 
-    private final TicketVendorService ticketVendorService;
-
     @Transactional
     ReservationDto createReservation(ReservationRequest reservationRequest) {
         var reservation = Reservation.builder()
@@ -35,14 +31,7 @@ class ReservationService {
             .build();
 
         if (reservation.getEvent().getExternalVendorManaged()) {
-            // Reserve tickets at external ticket vendor
-            ticketVendorService.reserveTickets(
-                new TicketReservationCommand(
-                    reservationRequest.eventId(),
-                    reservationRequest.category(),
-                    reservationRequest.quantity()
-                )
-            );
+            // TODO: Reserve tickets at external ticket vendor
         }
 
         try {
