@@ -21,7 +21,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.service.annotation.HttpExchange;
 
-public interface TicketVendorApi {
+public interface TicketVendorService {
 
   /**
    * GET /event : Get all events (by an optional category and/or city) Get a list of all events. If
