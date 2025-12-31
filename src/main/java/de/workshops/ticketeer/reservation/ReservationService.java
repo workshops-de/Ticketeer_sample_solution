@@ -2,8 +2,12 @@ package de.workshops.ticketeer.reservation;
 
 import de.workshops.ticketeer.NotificationException;
 import de.workshops.ticketeer.event.Event;
+import de.workshops.ticketeer.event.EventNotFoundException;
+import de.workshops.ticketeer.event.EventRepository;
 import de.workshops.ticketeer.event.InvalidTransitionException;
 import de.workshops.ticketeer.order.ReservationOrderEvent;
+import de.workshops.ticketeer.ticketvendor.TicketVendorService;
+import de.workshops.ticketeer.ticketvendor.model.TicketReservationRequest;
 import java.time.LocalDate;
 import java.util.UUID;
 import lombok.RequiredArgsConstructor;
@@ -18,29 +22,46 @@ class ReservationService {
 
     private final ReservationRepository reservationRepository;
 
+    private final EventRepository eventRepository;
+
     private final ApplicationEventPublisher eventPublisher;
+
+    private final TicketVendorService ticketVendorService;
 
     @Transactional
     ReservationDto createReservation(ReservationRequest reservationRequest) {
         var reservation = Reservation.builder()
-            .event(Event.builder().id(reservationRequest.eventId()).build())
+            .event(
+                Event
+                    .builder()
+                    .id(reservationRequest.eventId())
+                    .build())
             .reservedAt(LocalDate.now())
             .quantity(reservationRequest.quantity())
             .reservationNumber(UUID.randomUUID())
             .expiresAt(LocalDate.now().plusDays(7))
             .build();
 
-        if (reservation.getEvent().getExternalVendorManaged()) {
-            // TODO: Reserve tickets at external ticket vendor
+        var event = eventRepository
+            .findById(reservationRequest.eventId())
+            .orElseThrow(EventNotFoundException::new);
+        if (event.getExternalVendorManaged()) {
+            ticketVendorService.reserveEventTickets(
+                event.getExternalVendorId(),
+                new TicketReservationRequest().category(event.getExternalVendorCategory())
+            );
         }
 
         try {
             // Publish reservation created event (synchronously)
-            eventPublisher.publishEvent(new ReservationEvent(
-                this,
-                reservationRequest.eventId(),
-                reservationRequest.quantity(),
-                reservation::setSinglePrice));
+            eventPublisher.publishEvent(
+                new ReservationEvent(
+                    this,
+                    reservationRequest.eventId(),
+                    reservationRequest.quantity(),
+                    reservation::setSinglePrice
+                )
+            );
             var saved = reservationRepository.save(reservation);
             return new ReservationMapper().apply(saved);
         } catch (NotificationException e) {

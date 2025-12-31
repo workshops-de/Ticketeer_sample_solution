@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 @Slf4j
 public class EventNotFoundException extends NoSuchElementException {
 
-  EventNotFoundException() {
+  public EventNotFoundException() {
     super();
 
     log.error("Event not found");

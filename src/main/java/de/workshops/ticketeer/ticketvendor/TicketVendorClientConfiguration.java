@@ -8,17 +8,18 @@ import org.springframework.web.client.support.RestClientAdapter;
 import org.springframework.web.service.invoker.HttpServiceProxyFactory;
 
 @Configuration
-public class TicketVendorClientConfiguration {
+class TicketVendorClientConfiguration {
 
   private final String ticketVendorClientUrl;
 
-  public TicketVendorClientConfiguration(
-      @Value("${ticket-vendor.client.url}") String ticketVendorClientUrl) {
+  TicketVendorClientConfiguration(
+      @Value("${ticket-vendor.client.url}") String ticketVendorClientUrl
+  ) {
     this.ticketVendorClientUrl = ticketVendorClientUrl;
   }
 
   @Bean
-  public HttpServiceProxyFactory httpServiceProxyFactory(RestClient.Builder builder) {
+  HttpServiceProxyFactory httpServiceProxyFactory(RestClient.Builder builder) {
     RestClient restClient = builder
         .baseUrl(ticketVendorClientUrl)
         .build();

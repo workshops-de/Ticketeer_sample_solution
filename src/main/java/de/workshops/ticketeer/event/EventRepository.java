@@ -9,5 +9,5 @@ import org.springframework.data.repository.ListCrudRepository;
 ///   1. Creates the implementation
 ///   2.  Registers it as a Spring bean
 ///   3.  Enables exception translation
-interface EventRepository extends ListCrudRepository<Event, Long> {
+public interface EventRepository extends ListCrudRepository<Event, Long> {
 }

@@ -9,6 +9,7 @@ import jakarta.persistence.Id;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.Objects;
+import java.util.UUID;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -45,6 +46,10 @@ public class Event {
   Integer remainingTickets;
 
   Boolean externalVendorManaged = false;
+
+  String externalVendorCategory;
+
+  UUID externalVendorId;
 
   /// Additionally, you can add a `@Conver(converter = EventStatusConverter.class)` annotation to convert between database and Java types.
   /// This is only necessary if the `@Converter` annotation in Class `EventStatusConverter` is NOT set to `autoApply = true`.

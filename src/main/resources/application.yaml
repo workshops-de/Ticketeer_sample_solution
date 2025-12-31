@@ -31,3 +31,7 @@ ticketeer:
     - Circus
     - and more!
   environment: Default
+
+ticket-vendor:
+  client:
+    url: http://localhost:3131
