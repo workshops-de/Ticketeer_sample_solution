@@ -4,9 +4,6 @@ import java.util.Objects;
 import lombok.Getter;
 import lombok.Setter;
 
-/**
- * Address
- */
 @Setter
 @Getter
 public class Address {

@@ -8,9 +8,6 @@ import java.util.UUID;
 import lombok.Getter;
 import lombok.Setter;
 
-/**
- * Event
- */
 @Getter
 @Setter
 public class Event {
