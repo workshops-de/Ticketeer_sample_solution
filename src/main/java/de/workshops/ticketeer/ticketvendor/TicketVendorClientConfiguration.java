@@ -19,8 +19,8 @@ class TicketVendorClientConfiguration {
   }
 
   @Bean
-  HttpServiceProxyFactory httpServiceProxyFactory(RestClient.Builder builder) {
-    RestClient restClient = builder
+  HttpServiceProxyFactory httpServiceProxyFactory() {
+    RestClient restClient = RestClient.builder()
         .baseUrl(ticketVendorClientUrl)
         .build();
 
@@ -30,7 +30,7 @@ class TicketVendorClientConfiguration {
   }
 
   @Bean
-  public TicketVendorService httpBinClient(HttpServiceProxyFactory httpServiceProxyFactory) {
+  TicketVendorService httpBinClient(HttpServiceProxyFactory httpServiceProxyFactory) {
     return httpServiceProxyFactory.createClient(TicketVendorService.class);
   }
 }
