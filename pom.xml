@@ -31,6 +31,7 @@
 		<openapi-generator-maven-plugin.version>7.18.0</openapi-generator-maven-plugin.version>
 		<swagger.version>2.2.41</swagger.version>
 		<jackson-databind-nullable.version>0.2.8</jackson-databind-nullable.version>
+		<springdoc-openapi-starter-webmvc-ui.version>3.0.1</springdoc-openapi-starter-webmvc-ui.version>
 	</properties>
 	<dependencies>
 		<dependency>
@@ -56,19 +57,9 @@
 		</dependency>
 
 		<dependency>
-			<groupId>io.swagger.core.v3</groupId>
-			<artifactId>swagger-core</artifactId>
-			<version>${swagger.version}</version>
-		</dependency>
-		<dependency>
-			<groupId>io.swagger.core.v3</groupId>
-			<artifactId>swagger-annotations</artifactId>
-			<version>${swagger.version}</version>
-		</dependency>
-		<dependency>
-			<groupId>org.openapitools</groupId>
-			<artifactId>jackson-databind-nullable</artifactId>
-			<version>${jackson-databind-nullable.version}</version>
+			<groupId>org.springdoc</groupId>
+			<artifactId>springdoc-openapi-starter-webmvc-ui</artifactId>
+			<version>${springdoc-openapi-starter-webmvc-ui.version}</version>
 		</dependency>
 
 		<dependency>
