@@ -34,4 +34,4 @@ ticketeer:
 
 ticket-vendor:
   client:
-    url: http://localhost:3131
+    url: http://localhost:3131/ticketvendor/api
