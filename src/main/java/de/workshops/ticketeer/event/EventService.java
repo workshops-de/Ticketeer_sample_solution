@@ -2,14 +2,15 @@ package de.workshops.ticketeer.event;
 
 import de.workshops.ticketeer.NotificationException;
 import de.workshops.ticketeer.reservation.ReservationEvent;
+import jakarta.transaction.Transactional;
+import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.event.EventListener;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
-
 @Service
+@Transactional
 @RequiredArgsConstructor
 class EventService {
 
