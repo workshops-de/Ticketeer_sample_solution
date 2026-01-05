@@ -22,8 +22,10 @@ public class ReservationController {
     private final ReservationService reservationService;
 
     @PostMapping(value = "/event/{id}", params = "quantity")
-    ResponseEntity<ReservationDto> reserveTicket(@PathVariable Long id, @RequestParam @Max(5) int quantity) {
-        var reservationDto = reservationService.createReservation(new ReservationRequest(id, quantity));
+    ResponseEntity<ReservationDto> reserveTicket(@PathVariable Long id,
+        @RequestParam @Max(5) int quantity, @RequestParam String category) {
+        var reservationDto = reservationService.createReservation(
+            new ReservationRequest(id, quantity, category));
         return new ResponseEntity<>(reservationDto, HttpStatus.CREATED);
     }
 

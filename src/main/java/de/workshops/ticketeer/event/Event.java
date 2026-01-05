@@ -47,8 +47,6 @@ public class Event {
 
   Boolean externalVendorManaged = false;
 
-  String externalVendorCategory;
-
   UUID externalVendorId;
 
   /// Additionally, you can add a `@Conver(converter = EventStatusConverter.class)` annotation to convert between database and Java types.

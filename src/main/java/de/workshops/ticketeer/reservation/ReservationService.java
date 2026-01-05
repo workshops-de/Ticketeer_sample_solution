@@ -47,7 +47,7 @@ class ReservationService {
             .orElseThrow(EventNotFoundException::new);
         if (event.getExternalVendorManaged()) {
             var ticketReservationRequest = new TicketReservationRequest();
-            ticketReservationRequest.category(event.getExternalVendorCategory());
+            ticketReservationRequest.category(reservationRequest.seatCategory());
             ticketReservationRequest.number(reservationRequest.quantity());
             ticketVendorService.reserveEventTickets(
                 event.getExternalVendorId(),

@@ -1,14 +1,14 @@
 package de.workshops.ticketeer.reservation;
 
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+
 import de.workshops.ticketeer.event.InvalidTransitionException;
 import de.workshops.ticketeer.util.AbstractPostgreSQLTestcontainersTest;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.jdbc.Sql;
-
-import static org.junit.jupiter.api.Assertions.assertNotNull;
-import static org.junit.jupiter.api.Assertions.assertThrows;
 
 @SpringBootTest
 @Sql(statements = {
@@ -23,12 +23,14 @@ class ReservationServiceTest extends AbstractPostgreSQLTestcontainersTest {
 
     @Test
     void testCreateReservation_tooManyTickets() {
-        assertThrows(InvalidTransitionException.class, () -> reservationService.createReservation(new ReservationRequest(1L, 3)));
+        assertThrows(InvalidTransitionException.class, () -> reservationService.createReservation(
+            new ReservationRequest(1L, 3, "Category 1")));
     }
 
     @Test
     void testCreateReservation_ok() {
-        var reservation = reservationService.createReservation(new ReservationRequest(1L, 2));
+        var reservation = reservationService.createReservation(
+            new ReservationRequest(1L, 2, "Category 1"));
 
         assertNotNull(reservation);
     }
