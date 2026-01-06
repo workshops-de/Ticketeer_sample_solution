@@ -1,8 +1,10 @@
 package de.workshops.ticketeer.ticketvendor.model;
 
 import lombok.Getter;
+import lombok.ToString;
 
 @Getter
+@ToString
 public enum EventStatus {
 
   ANNOUNCED("announced"),
@@ -11,23 +13,9 @@ public enum EventStatus {
 
   SOLD_OUT("sold out");
 
-  private String value;
+  private final String value;
 
   EventStatus(String value) {
     this.value = value;
-  }
-
-  @Override
-  public String toString() {
-    return String.valueOf(value);
-  }
-
-  public static EventStatus fromValue(String value) {
-    for (EventStatus b : EventStatus.values()) {
-      if (b.value.equals(value)) {
-        return b;
-      }
-    }
-    throw new IllegalArgumentException("Unexpected value '" + value + "'");
   }
 }

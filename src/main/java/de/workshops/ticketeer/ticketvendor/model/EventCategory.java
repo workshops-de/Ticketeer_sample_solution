@@ -1,8 +1,10 @@
 package de.workshops.ticketeer.ticketvendor.model;
 
 import lombok.Getter;
+import lombok.ToString;
 
 @Getter
+@ToString
 public enum EventCategory {
 
   MUSIC("music"),
@@ -21,19 +23,5 @@ public enum EventCategory {
 
   EventCategory(String value) {
     this.value = value;
-  }
-
-  @Override
-  public String toString() {
-    return String.valueOf(value);
-  }
-
-  public static EventCategory fromValue(String value) {
-    for (EventCategory b : EventCategory.values()) {
-      if (b.value.equals(value)) {
-        return b;
-      }
-    }
-    throw new IllegalArgumentException("Unexpected value '" + value + "'");
   }
 }
