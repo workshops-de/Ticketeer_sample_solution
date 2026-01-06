@@ -32,7 +32,7 @@
 		<swagger.version>2.2.41</swagger.version>
 		<jackson-databind-nullable.version>0.2.8</jackson-databind-nullable.version>
 		<springdoc-openapi-starter-webmvc-ui.version>3.0.1</springdoc-openapi-starter-webmvc-ui.version>
-		<schematic.version>0.4.7</schematic.version>
+		<schematic.version>0.4.8</schematic.version>
 	</properties>
 	<dependencies>
 		<dependency>
