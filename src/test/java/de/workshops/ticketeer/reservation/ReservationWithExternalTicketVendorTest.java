@@ -2,6 +2,7 @@ package de.workshops.ticketeer.reservation;
 
 import de.workshops.ticketeer.ticketvendor.TicketReservationRequest;
 import de.workshops.ticketeer.ticketvendor.TicketVendorService;
+import java.util.UUID;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -15,8 +16,6 @@ import org.springframework.test.web.client.response.MockRestResponseCreators;
 import org.springframework.web.client.RestClient;
 import org.springframework.web.client.support.RestClientAdapter;
 import org.springframework.web.service.invoker.HttpServiceProxyFactory;
-
-import java.util.UUID;
 
 @RestClientTest
 class ReservationWithExternalTicketVendorTest {
@@ -80,6 +79,7 @@ class ReservationWithExternalTicketVendorTest {
     TicketVendorService ticketVendorService(RestClient restClient) {
       var adapter = RestClientAdapter.create(restClient);
       var factory = HttpServiceProxyFactory.builderFor(adapter).build();
+
       return factory.createClient(TicketVendorService.class);
     }
   }
