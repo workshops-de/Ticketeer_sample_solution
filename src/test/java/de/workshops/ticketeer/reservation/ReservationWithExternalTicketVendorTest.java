@@ -4,7 +4,7 @@ import de.workshops.ticketeer.ticketvendor.TicketReservationRequest;
 import de.workshops.ticketeer.ticketvendor.TicketVendorClientConfiguration;
 import de.workshops.ticketeer.ticketvendor.TicketVendorService;
 import java.util.UUID;
-import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -22,10 +22,14 @@ class ReservationWithExternalTicketVendorTest {
   @Autowired
   private TicketVendorService ticketVendorService;
 
-  private static MockRestServiceServer mockRestServiceServer;
+  @Value("${ticket-vendor.client.url}")
+  String ticketVendorClientUrl;
 
-  @BeforeAll
-  static void setUp(@Value("${ticket-vendor.client.url}") String ticketVendorClientUrl) {
+  private MockRestServiceServer mockRestServiceServer;
+
+  @BeforeEach
+  void setUp() {
+    // TODO: MockRestServiceServer doesn't seem to with RestClient, see https://github.com/spring-projects/spring-boot/issues/38832
     mockRestServiceServer = MockRestServiceServer
         .bindTo(
             RestClient
@@ -43,7 +47,12 @@ class ReservationWithExternalTicketVendorTest {
     var category = "VIP";
 
     mockRestServiceServer
-        .expect(MockRestRequestMatchers.requestTo("/events/" + externalVendorId + "/reservations"))
+        .expect(
+            MockRestRequestMatchers
+                .requestTo(
+                    ticketVendorClientUrl + "/events/" + externalVendorId + "/reservations"
+                )
+        )
         .andRespond(MockRestResponseCreators.withSuccess());
 
     // Act
