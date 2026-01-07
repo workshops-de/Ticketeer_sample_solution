@@ -196,19 +196,19 @@
 **Story hook:** For a high-profile festival, Ticketeer must sell a portion of tickets from a partner’s system (exposed via an external REST API). Ticketeer will reserve in its own DB but also call out to the partner.
 
 **Tasks**
-1. Given an **OpenAPI spec** (ticket-vendor-api.yaml):
-    * Use OpenAPI Generator to create a client module.
-    * Create an `@HttpExchange` interface.
-2. Write a configuration to have Spring Boot instantiate a RestClient for you.
+
+1. Given an **OpenAPI spec** (`ticket-vendor-api.yaml`):
+    * Create an `@HttpExchange` interface that calls "/events/{id}/reservations" with a POST verb
+      for reserving event tickets with an external vendor.
+2. Write a configuration to have Spring Boot instantiate a RestClient for your `@HttpExchange`
+   interface.
 3. Extend createReservation(...):
     * If event is `externalVendorManaged=true`, also call the vendor API to reserve tickets.
     * If the vendor call fails, roll back your local transaction.
 
 **Testing focus**
-* Use `@RestClientTest` to:
-    * Simulate successful vendor reservation.
-    * Simulate failure and assert that your local reservation is not persisted.
-* Verify that your integration code is well-isolated and testable.
+
+* Use `@RestClientTest` to simulate a successful vendor reservation.
 
 ⠀
 ## Day 4 – Configuration, Security & Hardening the APIs
