@@ -1,6 +1,13 @@
 spring:
   application:
     name: Ticketeer
+  http:
+    serviceclient:
+      default:
+        base-url: 'http://localhost:3131/ticketvendor/api'
+    clients:
+      imperative:
+        factory: jdk
   datasource:
     url: jdbc:postgresql://localhost:5432/postgres
     username: postgres
@@ -31,7 +38,3 @@ ticketeer:
     - Circus
     - and more!
   environment: Default
-
-ticket-vendor:
-  client:
-    url: http://localhost:3131/ticketvendor/api
