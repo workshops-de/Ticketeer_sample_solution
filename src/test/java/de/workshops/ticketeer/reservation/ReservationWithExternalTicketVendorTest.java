@@ -58,7 +58,7 @@ class ReservationWithExternalTicketVendorTest {
     assert (response.getStatusCode().is2xxSuccessful());
   }
 
-  // For tests annotated with @RestClientTest, we still need an imperative way to define the RestClient
+  // For tests annotated with @RestClientTest, we still need to define the RestClient imperatively.
   @TestConfiguration
   static class TestConfig {
     @Value("${spring.http.serviceclient.default.base-url}")

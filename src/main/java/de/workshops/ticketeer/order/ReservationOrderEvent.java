@@ -1,11 +1,10 @@
 package de.workshops.ticketeer.order;
 
 import de.workshops.ticketeer.reservation.Reservation;
-import lombok.Getter;
-import org.springframework.context.ApplicationEvent;
-
 import java.util.UUID;
 import java.util.function.Consumer;
+import lombok.Getter;
+import org.springframework.context.ApplicationEvent;
 
 @Getter
 public class ReservationOrderEvent extends ApplicationEvent {

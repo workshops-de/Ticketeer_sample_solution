@@ -73,4 +73,3 @@ class ReservationServiceTest extends AbstractPostgreSQLTestcontainersTest {
         assertNotNull(reservation);
     }
 }
-

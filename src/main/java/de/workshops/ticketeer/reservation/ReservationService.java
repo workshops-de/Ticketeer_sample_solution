@@ -95,5 +95,4 @@ class ReservationService {
         reservation.setStatus(ReservationStatus.CONFIRMED);
         return reservationRepository.save(reservation);
     }
-
 }
