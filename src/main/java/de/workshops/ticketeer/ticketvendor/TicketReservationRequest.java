@@ -1,4 +1,4 @@
-package de.workshops.ticketeer.ticketvendor.model;
+package de.workshops.ticketeer.ticketvendor;
 
 import lombok.Builder;
 

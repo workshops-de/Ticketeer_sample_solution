@@ -1,7 +1,12 @@
 package de.workshops.ticketeer.reservation;
 
-public class ReservationNotFoundException extends RuntimeException {
-    public ReservationNotFoundException(String message) {
+import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.annotation.ResponseStatus;
+
+@ResponseStatus(HttpStatus.NOT_FOUND)
+class ReservationNotFoundException extends RuntimeException {
+
+    ReservationNotFoundException(String message) {
         super(message);
     }
 }

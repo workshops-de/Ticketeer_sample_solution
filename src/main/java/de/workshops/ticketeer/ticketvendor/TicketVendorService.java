@@ -1,76 +1,13 @@
 package de.workshops.ticketeer.ticketvendor;
 
-import de.workshops.ticketeer.ticketvendor.model.Event;
-import de.workshops.ticketeer.ticketvendor.model.EventCategory;
-import de.workshops.ticketeer.ticketvendor.model.TicketOrderRequest;
-import de.workshops.ticketeer.ticketvendor.model.TicketOrderResponse;
-import de.workshops.ticketeer.ticketvendor.model.TicketReservationRequest;
-import de.workshops.ticketeer.ticketvendor.model.TicketReservationResponse;
 import jakarta.validation.Valid;
-import java.util.List;
 import java.util.UUID;
-import org.jspecify.annotations.Nullable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.service.annotation.HttpExchange;
 
 public interface TicketVendorService {
-
-  /**
-   * GET /event: Get all events (by an optional category and/or city).
-   *
-   * @param category (optional)
-   * @param city     (optional)
-   * @return a list of events (status code 200) or status code 204, if no events are found or
-   * ErrorModel (status code 400)
-   */
-  @HttpExchange(
-      method = "GET",
-      value = "/events",
-      accept = {"application/json"}
-  )
-  ResponseEntity<List<Event>> getEvents(
-      @RequestParam(value = "category", required = false) @Nullable EventCategory category,
-      @RequestParam(value = "city", required = false) @Nullable String city
-  );
-
-  /**
-   * GET /event/{id} Get details for a specific event
-   *
-   * @param eventId (required)
-   * @return Event detail (status code 200) or status code 204, when event not found or Unexpected
-   * error (status code 400)
-   */
-  @HttpExchange(
-      method = "GET",
-      value = "/events/{id}",
-      accept = {"application/json"}
-  )
-  ResponseEntity<Event> getEvent(
-      @PathVariable(name = "id") UUID eventId
-  );
-
-  /**
-   * POST /event/{id}/order: Order tickets for a specific event
-   *
-   * @param eventId            (required)
-   * @param ticketOrderRequest (required)
-   * @return Ticket/s successfully ordered (status code 201) or "Not enough tickets available" or
-   * "Event sold out" (status code 400) or "Event ID not found" (status code 404) or
-   * "Unexpected error" (status code 400)
-   */
-  @HttpExchange(
-      method = "POST",
-      value = "/events/{id}/orders",
-      accept = {"application/json"},
-      contentType = "application/json"
-  )
-  ResponseEntity<TicketOrderResponse> orderEventTickets(
-      @PathVariable(name = "id") UUID eventId,
-      @RequestBody @Valid TicketOrderRequest ticketOrderRequest
-  );
 
   /**
    * POST /event/{id}/reserve: Reserve tickets for a specific event

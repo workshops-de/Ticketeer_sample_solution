@@ -6,8 +6,8 @@ import de.workshops.ticketeer.event.EventNotFoundException;
 import de.workshops.ticketeer.event.EventRepository;
 import de.workshops.ticketeer.event.InvalidTransitionException;
 import de.workshops.ticketeer.order.ReservationOrderEvent;
+import de.workshops.ticketeer.ticketvendor.TicketReservationRequest;
 import de.workshops.ticketeer.ticketvendor.TicketVendorService;
-import de.workshops.ticketeer.ticketvendor.model.TicketReservationRequest;
 import java.time.LocalDate;
 import java.util.UUID;
 import lombok.RequiredArgsConstructor;
@@ -46,13 +46,18 @@ class ReservationService {
             .findById(reservationRequest.eventId())
             .orElseThrow(EventNotFoundException::new);
         if (event.getExternalVendorManaged()) {
-            ticketVendorService.reserveEventTickets(
+            var ticketReservationResponse = ticketVendorService.reserveEventTickets(
                 event.getExternalVendorId(),
                 TicketReservationRequest.builder()
                     .number(reservationRequest.quantity())
                     .category(reservationRequest.seatCategory())
                     .build()
             );
+
+            if (!ticketReservationResponse.getStatusCode().is2xxSuccessful()) {
+                throw new TicketReservationException(
+                    "Failed to reserve tickets with external vendor");
+            }
         }
 
         try {

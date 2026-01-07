@@ -20,9 +20,13 @@ class ReservationControllerTest {
 
     @Test
     void testReserveTicketForAnEventIsHandledByReservationController() {
-        mockMvcTester.perform(post("/api/reservations/event/2")
-                .param("quantity", "3"));
+        mockMvcTester
+            .perform(post("/api/reservations/event/2")
+                .param("quantity", "3")
+                .param("category", "Category 1"));
 
-        verify(reservationService).createReservation(new ReservationRequest(2L, 3, "Category 1"));
+        verify(reservationService).createReservation(
+            new ReservationRequest(2L, 3, "Category 1")
+        );
     }
 }

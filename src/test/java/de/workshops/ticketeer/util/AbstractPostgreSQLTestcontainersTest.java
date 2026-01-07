@@ -7,9 +7,8 @@ import org.testcontainers.junit.jupiter.Testcontainers;
 import org.testcontainers.postgresql.PostgreSQLContainer;
 
 @Testcontainers
-
-// Use the configured database, do not replace it with an embedded database
 @AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
+// Use the configured database, do not replace it with an embedded database
 public abstract class AbstractPostgreSQLTestcontainersTest {
 
     @Container

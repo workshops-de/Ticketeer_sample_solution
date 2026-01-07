@@ -1,7 +1,10 @@
 package de.workshops.ticketeer;
 
-import de.workshops.ticketeer.reservation.ReservationDto;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+
 import de.workshops.ticketeer.order.OrderDto;
+import de.workshops.ticketeer.reservation.ReservationDto;
 import de.workshops.ticketeer.reservation.ReservationStatus;
 import de.workshops.ticketeer.util.AbstractPostgreSQLTestcontainersTest;
 import org.junit.jupiter.api.Test;
@@ -12,9 +15,6 @@ import org.springframework.boot.test.web.server.LocalServerPort;
 import org.springframework.http.MediaType;
 import org.springframework.test.context.jdbc.Sql;
 import org.springframework.test.web.servlet.client.RestTestClient;
-
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @Sql(statements = {
@@ -30,17 +30,18 @@ public class PurchaseFlowTest extends AbstractPostgreSQLTestcontainersTest {
 
     @Test
     void reserveAndPurchaseTicket() {
-        var reservationDto = reserveTicket(1L, 2);
+        var reservationDto = reserveTicket(1L, 2, "Category 1");
         orderTicket(reservationDto);
     }
 
-    private ReservationDto reserveTicket(Long eventId, int quantity) {
+    private ReservationDto reserveTicket(Long eventId, int quantity, String category) {
         var exchangeResult = restTestClient.post()
             .uri(uriBuilder -> uriBuilder
                 .host("localhost")
                 .port(port)
                 .path("/api/reservations/event/{id}")
                 .queryParam("quantity", quantity)
+                .queryParam("category", category)
                 .build(eventId))
             .accept(MediaType.APPLICATION_JSON)
             .exchange()
@@ -49,6 +50,7 @@ public class PurchaseFlowTest extends AbstractPostgreSQLTestcontainersTest {
 
         var reservationDto = exchangeResult.getResponseBody();
 
+        assertNotNull(reservationDto);
         assertNotNull(reservationDto.reservationNumber());
         assertEquals(ReservationStatus.PENDING, reservationDto.status());
 

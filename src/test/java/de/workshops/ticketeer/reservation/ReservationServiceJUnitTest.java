@@ -1,20 +1,20 @@
 package de.workshops.ticketeer.reservation;
 
-import de.workshops.ticketeer.event.Event;
-import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
-import org.mockito.InjectMocks;
-import org.mockito.Mock;
-import org.mockito.junit.jupiter.MockitoExtension;
-
-import java.util.Optional;
-import java.util.UUID;
-
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.when;
+
+import de.workshops.ticketeer.event.Event;
+import java.time.LocalDate;
+import java.util.Optional;
+import java.util.UUID;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.junit.jupiter.MockitoExtension;
 
 @ExtendWith(MockitoExtension.class)
 class ReservationServiceJUnitTest {
@@ -31,6 +31,7 @@ class ReservationServiceJUnitTest {
         var reservation = Reservation.builder()
             .reservationNumber(UUID.randomUUID())
             .event(Event.builder().id(1L).build())
+            .expiresAt(LocalDate.now().plusDays(7))
             .build();
         when(reservationRepository.findByReservationNumberAndStatus(reservation.getReservationNumber(), ReservationStatus.PENDING))
             .thenReturn(Optional.of(reservation));

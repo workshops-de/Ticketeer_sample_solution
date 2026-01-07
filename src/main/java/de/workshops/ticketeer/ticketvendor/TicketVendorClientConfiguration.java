@@ -8,7 +8,7 @@ import org.springframework.web.client.support.RestClientAdapter;
 import org.springframework.web.service.invoker.HttpServiceProxyFactory;
 
 @Configuration
-class TicketVendorClientConfiguration {
+public class TicketVendorClientConfiguration {
 
   private final String ticketVendorClientUrl;
 
