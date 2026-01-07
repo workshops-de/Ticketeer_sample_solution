@@ -22,7 +22,8 @@ import lombok.ToString;
 import org.hibernate.proxy.HibernateProxy;
 
 @Entity
-@Table(name = "`order`") // 'order' is a reserved keyword in SQL. Hence, we quote it.
+@Table(name = "ticket_order")
+// 'order' is a reserved keyword in SQL. Hence, we use a different table name.
 @Getter
 @Setter
 @ToString
