@@ -38,3 +38,5 @@ ticketeer:
     - Circus
     - and more!
   environment: Default
+  vendor:
+    enabled: true

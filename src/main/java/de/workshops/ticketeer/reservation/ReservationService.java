@@ -8,13 +8,15 @@ import de.workshops.ticketeer.event.InvalidTransitionException;
 import de.workshops.ticketeer.order.ReservationOrderEvent;
 import de.workshops.ticketeer.ticketvendor.TicketReservationRequest;
 import de.workshops.ticketeer.ticketvendor.TicketVendorService;
-import java.time.LocalDate;
-import java.util.UUID;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.context.event.EventListener;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.time.LocalDate;
+import java.util.Optional;
+import java.util.UUID;
 
 @Service
 @RequiredArgsConstructor
@@ -26,7 +28,7 @@ class ReservationService {
 
     private final ApplicationEventPublisher eventPublisher;
 
-    private final TicketVendorService ticketVendorService;
+    private final Optional<TicketVendorService> ticketVendorService;
 
     @Transactional
     ReservationDto createReservation(ReservationRequest reservationRequest) {
@@ -46,7 +48,10 @@ class ReservationService {
             .findById(reservationRequest.eventId())
             .orElseThrow(EventNotFoundException::new);
         if (event.getExternalVendorManaged()) {
-            var ticketReservationResponse = ticketVendorService.reserveEventTickets(
+            if (ticketVendorService.isEmpty()) {
+                throw new TicketReservationException("External vendor not configured");
+            }
+            var ticketReservationResponse = ticketVendorService.get().reserveEventTickets(
                 event.getExternalVendorId(),
                 TicketReservationRequest.builder()
                     .number(reservationRequest.quantity())
